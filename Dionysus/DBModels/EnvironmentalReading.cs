@@ -14,10 +14,10 @@ namespace Dionysus.DBModels
         [Key]
         [Column("reading_id")]
         public int ReadingId { get; set; }
-        [Column("temperature_reading", TypeName = "decimal(3, 1)")]
-        public decimal? TemperatureReading { get; set; }
-        [Column("humidity_reading", TypeName = "decimal(3, 1)")]
-        public decimal? HumidityReading { get; set; }
+        [Column("temperature_reading")]
+        public double? TemperatureReading { get; set; }
+        [Column("humidity_reading")]
+        public double? HumidityReading { get; set; }
         [Column("date_time", TypeName = "datetime")]
         public DateTime? DateTime { get; set; }
     }

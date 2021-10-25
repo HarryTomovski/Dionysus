@@ -34,7 +34,7 @@ namespace Dionysus.DBModels
             modelBuilder.Entity<EnvironmentalReading>(entity =>
             {
                 entity.HasKey(e => e.ReadingId)
-                    .HasName("PK__environm__8091F95A0564448E");
+                    .HasName("PK__environm__8091F95AAEBBA4D7");
             });
 
             OnModelCreatingPartial(modelBuilder);
