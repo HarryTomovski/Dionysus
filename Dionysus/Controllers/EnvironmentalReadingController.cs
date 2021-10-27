@@ -22,11 +22,11 @@ namespace Dionysus.Controllers
         }
 
         [HttpPost]
-        public ActionResult storeReading(EnvironmentalReading reading)
+        public async Task<ActionResult> storeReading(EnvironmentalReading reading)
         {
             try
             {
-                var success = environmentalreadingBusinessLogic.storeReading(reading);
+                var success = await Task.Run(() => environmentalreadingBusinessLogic.storeReading(reading));
                 if (success)
                 {
                     return StatusCode(StatusCodes.Status200OK, success);
