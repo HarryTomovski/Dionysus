@@ -9,5 +9,7 @@ namespace Dionysus.BusinessLogic
     public interface IEnvironmentalreadingBusinessLogic
     {
         public bool storeReading(EnvironmentalReading reading);
+
+        public Command getCommand();
     }
 }

@@ -27,5 +27,26 @@ namespace Dionysus.DBAccess
                 return false;
             }
         }
+
+        public List<EnvironmentalReading> getEnvironmentalValuesForPastMinute()
+        {
+            List<EnvironmentalReading> list = new();
+            //DateTime now = DateTime.Now();
+            DateTime timeOneMinuteAgo = DateTime.Now.AddMinutes(-1);
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    list = context.EnvironmentalReadings.Where(d => d.DateTime > timeOneMinuteAgo).ToList();
+                    return list;
+                }
+                catch (Exception)
+                {
+                    return list;
+                }
+            }
+
+        }
+
     }
 }
