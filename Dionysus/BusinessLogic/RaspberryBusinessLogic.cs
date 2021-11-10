@@ -1,5 +1,6 @@
 ﻿using Dionysus.DBAccess.Interfaces;
 using Dionysus.DBModels;
+using Dionysus.DTO_s;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Dionysus.BusinessLogic
 {
-    public class EnvironmentalReadingBusinessLogic : IEnvironmentalreadingBusinessLogic
+    public class RaspberryBusinessLogic : IRaspberryBusinessLogic
     {
         private IEnvironmentalReadingDBAccess environmentalReadingDBAccess;
 
-        public EnvironmentalReadingBusinessLogic(IEnvironmentalReadingDBAccess environmentalReadingDBAccess)
+        public RaspberryBusinessLogic(IEnvironmentalReadingDBAccess environmentalReadingDBAccess)
         {
             this.environmentalReadingDBAccess = environmentalReadingDBAccess;
         }
@@ -39,5 +40,7 @@ namespace Dionysus.BusinessLogic
             Command command = new Command(averageTemp > targetedTemp, averageHum > targetedHum);
             return command;
         }
+
+        
     }
 }

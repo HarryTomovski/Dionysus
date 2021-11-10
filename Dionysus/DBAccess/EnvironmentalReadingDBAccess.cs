@@ -48,5 +48,26 @@ namespace Dionysus.DBAccess
 
         }
 
+        public async Task<List<EnvironmentalReading>> getReadingsForDate(DateTime date)
+        {
+            List<EnvironmentalReading> list = new();
+            DateTime yesterday = date.AddDays(-1);
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    list = await Task.Run(() => context.EnvironmentalReadings.Where(d => d.DateTime.Value.Date == date.Date).ToList());
+                    return list;
+                }
+                catch (Exception e)
+                {
+
+                    Console.WriteLine(e.Message);
+                    return list;
+                    
+                }
+            }
+        }
+
     }
 }

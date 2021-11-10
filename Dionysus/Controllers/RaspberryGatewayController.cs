@@ -1,5 +1,6 @@
 ﻿using Dionysus.BusinessLogic;
 using Dionysus.DBModels;
+using Dionysus.DTO_s;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,13 +14,13 @@ namespace Dionysus.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    
-    public class EnvironmentalReadingController : ControllerBase
-    {
-        private readonly ILogger<EnvironmentalReadingController> _logger;
 
-        private IEnvironmentalreadingBusinessLogic environmentalreadingBusinessLogic;
-        public EnvironmentalReadingController(IEnvironmentalreadingBusinessLogic environmentalreadingBusinessLogic, ILogger<EnvironmentalReadingController> logger)
+    public class RaspberryGatewayController : ControllerBase
+    {
+        private readonly ILogger<RaspberryGatewayController> _logger;
+
+        private IRaspberryBusinessLogic environmentalreadingBusinessLogic;
+        public RaspberryGatewayController(IRaspberryBusinessLogic environmentalreadingBusinessLogic, ILogger<RaspberryGatewayController> logger)
         {
             this.environmentalreadingBusinessLogic = environmentalreadingBusinessLogic;
             _logger = logger;
@@ -30,8 +31,9 @@ namespace Dionysus.Controllers
         {
             try
             {
-                var success = true;
-                //var success = await Task.Run(() => environmentalreadingBusinessLogic.storeReading(reading));
+                //For debug without DB purposes
+               // var success = true;
+                var success = await Task.Run(() => environmentalreadingBusinessLogic.storeReading(reading));
                 _logger.LogInformation(reading.DateTime.ToString());
                 if (success)
                 {
@@ -57,7 +59,7 @@ namespace Dionysus.Controllers
             {
                 //get command based of average from last 1 minute
                 var command = await Task.Run(() => environmentalreadingBusinessLogic.getCommand());
-                if(command is not null)
+                if (command is not null)
                 {
                     return StatusCode(StatusCodes.Status200OK, command);
                 }
@@ -72,5 +74,6 @@ namespace Dionysus.Controllers
 
             }
         }
+        
     }
 }

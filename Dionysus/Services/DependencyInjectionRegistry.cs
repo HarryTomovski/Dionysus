@@ -1,4 +1,5 @@
 ﻿using Dionysus.BusinessLogic;
+using Dionysus.BusinessLogic.Interfaces;
 using Dionysus.DBAccess;
 using Dionysus.DBAccess.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +15,8 @@ namespace Dionysus.Services
         public static IServiceCollection AddMyServices(this IServiceCollection services)
         {
             services.AddSingleton<IEnvironmentalReadingDBAccess, EnvironmentalReadingDBAccess>();
-            services.AddScoped<IEnvironmentalreadingBusinessLogic, EnvironmentalReadingBusinessLogic>();
+            services.AddScoped<IRaspberryBusinessLogic, RaspberryBusinessLogic>();
+            services.AddScoped<IUIBusinessLogic, UIBusinessLogic>();
             return services;
         }
 

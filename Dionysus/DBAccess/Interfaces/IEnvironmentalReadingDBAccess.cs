@@ -11,6 +11,6 @@ namespace Dionysus.DBAccess.Interfaces
         public bool StoreReading(EnvironmentalReading reading);
 
         public List<EnvironmentalReading> getEnvironmentalValuesForPastMinute();
-     
+        public Task<List<EnvironmentalReading>> getReadingsForDate(DateTime date);
     }
 }

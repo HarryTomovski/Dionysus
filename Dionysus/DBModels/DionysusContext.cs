@@ -23,6 +23,7 @@ namespace Dionysus.DBModels
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=localhost;Database=Dionysus;Trusted_Connection=True;");
             }
         }
@@ -34,7 +35,7 @@ namespace Dionysus.DBModels
             modelBuilder.Entity<EnvironmentalReading>(entity =>
             {
                 entity.HasKey(e => e.ReadingId)
-                    .HasName("PK__environm__8091F95AAEBBA4D7");
+                    .HasName("PK__environm__8091F95AC83CA54A");
             });
 
             OnModelCreatingPartial(modelBuilder);
