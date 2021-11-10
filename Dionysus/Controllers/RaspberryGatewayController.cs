@@ -33,7 +33,7 @@ namespace Dionysus.Controllers
             {
                 //For debug without DB purposes
                // var success = true;
-                var success = await Task.Run(() => environmentalreadingBusinessLogic.storeReading(reading));
+                var success = await environmentalreadingBusinessLogic.storeReading(reading);
                 _logger.LogInformation(reading.DateTime.ToString());
                 if (success)
                 {
@@ -58,7 +58,7 @@ namespace Dionysus.Controllers
             try
             {
                 //get command based of average from last 1 minute
-                var command = await Task.Run(() => environmentalreadingBusinessLogic.getCommand());
+                var command = await environmentalreadingBusinessLogic.getCommand();
                 if (command is not null)
                 {
                     return StatusCode(StatusCodes.Status200OK, command);

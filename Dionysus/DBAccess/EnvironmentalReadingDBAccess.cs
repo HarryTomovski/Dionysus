@@ -9,14 +9,17 @@ namespace Dionysus.DBAccess
 {
     public class EnvironmentalReadingDBAccess : IEnvironmentalReadingDBAccess
     {
-        public bool StoreReading(EnvironmentalReading reading)
+        public async Task<bool> StoreReading(EnvironmentalReading reading)
         {
             try
             {
                 using (var context = new DionysusContext())
                 {
-                    context.EnvironmentalReadings.Add(reading);
-                    context.SaveChanges();
+                    await Task.Run(() =>
+                    {
+                        context.EnvironmentalReadings.Add(reading);
+                        context.SaveChanges();
+                    });
                     return true;
                 }
             }
@@ -28,16 +31,16 @@ namespace Dionysus.DBAccess
             }
         }
 
-        public List<EnvironmentalReading> getEnvironmentalValuesForPastMinute()
+        public async Task<List<EnvironmentalReading>> getEnvironmentalValuesForPastMinute()
         {
             List<EnvironmentalReading> list = new();
-            //DateTime now = DateTime.Now();
+       
             DateTime timeOneMinuteAgo = DateTime.Now.AddMinutes(-1);
             using (var context = new DionysusContext())
             {
                 try
                 {
-                    list = context.EnvironmentalReadings.Where(d => d.DateTime > timeOneMinuteAgo).ToList();
+                    list = await Task.Run(() => context.EnvironmentalReadings.Where(d => d.DateTime > timeOneMinuteAgo).ToList());
                     return list;
                 }
                 catch (Exception)
@@ -65,6 +68,24 @@ namespace Dionysus.DBAccess
                     Console.WriteLine(e.Message);
                     return list;
                     
+                }
+            }
+        }
+
+        public async Task<int> setTemperatureTarget(double temperature)
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    //add the db access for setting the targeted  value
+                    //await Task.Run(() => context.EnvironmentalReadings.Where(d => d.DateTime.Value.Date == date.Date).ToList());
+                    return 1;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return 0;
                 }
             }
         }

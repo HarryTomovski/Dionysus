@@ -43,5 +43,29 @@ namespace Dionysus.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
+
+        [HttpPost]
+        [Route("[controller]/setTemperatureTarget")]
+        public async Task<ActionResult> setTemperatureTarget([FromHeader] double temperature)
+        {
+
+            try
+            {
+                int result = await uIBusinessLogic.setTemperatureTarget(temperature);
+                if (result == 1)
+                {
+                    return StatusCode(StatusCodes.Status200OK, temperature);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status404NotFound);
+                }
+            }
+            catch (Exception e)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
     }
 }

@@ -9,9 +9,9 @@ namespace Dionysus.BusinessLogic
 {
     public interface IRaspberryBusinessLogic
     {
-        public bool storeReading(EnvironmentalReading reading);
+        public Task<bool> storeReading(EnvironmentalReading reading);
 
-        public Command getCommand();
+        public Task<Command> getCommand();
         
     }
 }

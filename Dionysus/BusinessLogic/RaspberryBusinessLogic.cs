@@ -16,17 +16,19 @@ namespace Dionysus.BusinessLogic
         {
             this.environmentalReadingDBAccess = environmentalReadingDBAccess;
         }
-        public bool storeReading(EnvironmentalReading reading)
+
+
+        public async Task<bool> storeReading(EnvironmentalReading reading)
         {
-            var success = environmentalReadingDBAccess.StoreReading(reading);
+            var success = await environmentalReadingDBAccess.StoreReading(reading);
    
             return success;   
         }
 
-        public Command getCommand()
+        public async Task<Command> getCommand()
         {
             //temperature values for the past minute
-            var environmentalValues = environmentalReadingDBAccess.getEnvironmentalValuesForPastMinute();
+            var environmentalValues = await environmentalReadingDBAccess.getEnvironmentalValuesForPastMinute();
 
             //maybe store average environmental values in db so they can be updated
             //for now have them static here
@@ -36,7 +38,6 @@ namespace Dionysus.BusinessLogic
             double? averageTemp = environmentalValues.Select(t => t.TemperatureReading).ToList().Average();
             double? averageHum = environmentalValues.Select(h => h.HumidityReading).ToList().Average();
 
-            //this is only if the average is higher than the desired one
             Command command = new Command(averageTemp > targetedTemp, averageHum > targetedHum);
             return command;
         }

@@ -22,7 +22,7 @@ namespace Dionysus.BusinessLogic
             double avarageHumidity = 0;
             double avarageTemperature = 0;
             var count = 0;
-            var readingsList = await Task.Run(()=> environmentalReadingDBAccess.getReadingsForDate(date));
+            var readingsList = await environmentalReadingDBAccess.getReadingsForDate(date);
 
             foreach (var reading in readingsList)
             {
@@ -37,6 +37,13 @@ namespace Dionysus.BusinessLogic
 
             return dto;
 
+        }
+
+        public async Task<int> setTemperatureTarget(double temperature)
+        {
+
+            int result = await environmentalReadingDBAccess.setTemperatureTarget(temperature);
+            return result;
         }
     }
 }

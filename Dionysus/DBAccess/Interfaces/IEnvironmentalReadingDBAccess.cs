@@ -8,9 +8,11 @@ namespace Dionysus.DBAccess.Interfaces
 {
     public interface IEnvironmentalReadingDBAccess
     {
-        public bool StoreReading(EnvironmentalReading reading);
+        public Task<bool> StoreReading(EnvironmentalReading reading);
 
-        public List<EnvironmentalReading> getEnvironmentalValuesForPastMinute();
+        public Task<List<EnvironmentalReading>> getEnvironmentalValuesForPastMinute();
         public Task<List<EnvironmentalReading>> getReadingsForDate(DateTime date);
+
+        public Task<int> setTemperatureTarget(double temperature);
     }
 }

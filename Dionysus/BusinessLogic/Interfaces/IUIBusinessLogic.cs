@@ -9,5 +9,7 @@ namespace Dionysus.BusinessLogic.Interfaces
    public interface IUIBusinessLogic
     {
         public Task<AvarageDataReadingDTO> getAvarageReadingForDate(DateTime date);
+
+        public Task<int> setTemperatureTarget(double temperature);
     }
 }
