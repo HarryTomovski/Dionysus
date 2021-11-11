@@ -12,5 +12,8 @@ namespace Dionysus.BusinessLogic.Interfaces
 
         public Task<int> setTemperatureTarget(double temperature);
         Task<int> setHumidityTarget(double humidity);
+        Task<int> setManualControl(bool enableManualControl);
+        Task<int> setMachineState(bool setTemperatureControl, bool setHumidityControl);
+        Task<ManualControlStates> getMachineState();
     }
 }

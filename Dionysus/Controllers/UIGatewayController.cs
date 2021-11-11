@@ -24,11 +24,11 @@ namespace Dionysus.Controllers
         [HttpGet("{date}")]
         public async Task<ActionResult<AvarageDataReadingDTO>> getAvarageReadingsForDate([FromHeader]DateTime date)
         {
-           
+           //might not need try catch here necause we have it in the db access class
             try
             {
                 var readingForDate = await Task.Run(() => uIBusinessLogic.getAvarageReadingForDate(date));
-                if (readingForDate != null)
+                if (readingForDate is not null)
                 {
                     return StatusCode(StatusCodes.Status200OK, readingForDate);
                 }
@@ -39,7 +39,6 @@ namespace Dionysus.Controllers
             }
             catch (Exception e)
             {
-
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
@@ -79,6 +78,77 @@ namespace Dionysus.Controllers
                 if (result == 1)
                 {
                     return StatusCode(StatusCodes.Status200OK, humidity);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status404NotFound);
+                }
+            }
+            catch (Exception e)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("[controller]/setManualControl")]
+        public async Task<ActionResult> setManualControl([FromHeader] bool enableManualControl)
+        {
+
+            try
+            {
+                int result = await uIBusinessLogic.setManualControl(enableManualControl);
+                if (result == 1)
+                {
+                    return StatusCode(StatusCodes.Status200OK, enableManualControl);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status404NotFound);
+                }
+            }
+            catch (Exception e)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("[controller]/setMachineState")]
+        public async Task<ActionResult> setMachineState([FromHeader] bool setTemperatureControl, [FromHeader] bool setHumidityControl)
+        {
+
+            try
+            {
+                int result = await uIBusinessLogic.setMachineState(setTemperatureControl, setHumidityControl);
+                if (result == 1)
+                {
+                    return StatusCode(StatusCodes.Status200OK, setTemperatureControl || setHumidityControl);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status404NotFound);
+                }
+            }
+            catch (Exception e)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("[controller]/getMachineStates")]
+        public async Task<ActionResult> getMachineStates()
+        {
+            try
+            {
+                ManualControlStates result = await uIBusinessLogic.getMachineState();
+                if (result is not null)
+                {
+                    return StatusCode(StatusCodes.Status200OK, result);
                 }
                 else
                 {

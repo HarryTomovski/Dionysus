@@ -29,19 +29,23 @@ namespace Dionysus.BusinessLogic
         {
             //temperature values for the past minute
             var environmentalValues = await environmentalReadingDBAccess.getEnvironmentalValuesForPastMinute();
+            if(environmentalValues is not null)
+            {
+                //maybe store average environmental values in db so they can be updated
+                //for now have them static here
+                double targetedTemp = 20.5;
+                double targetedHum = 60.5;
 
-            //maybe store average environmental values in db so they can be updated
-            //for now have them static here
-            double targetedTemp = 20.5;
-            double targetedHum = 60.5;
+                double? averageTemp = environmentalValues.Select(t => t.TemperatureReading).ToList().Average();
+                double? averageHum = environmentalValues.Select(h => h.HumidityReading).ToList().Average();
 
-            double? averageTemp = environmentalValues.Select(t => t.TemperatureReading).ToList().Average();
-            double? averageHum = environmentalValues.Select(h => h.HumidityReading).ToList().Average();
-
-            Command command = new Command(averageTemp > targetedTemp, averageHum > targetedHum);
-            return command;
+                Command command = new Command(averageTemp > targetedTemp, averageHum > targetedHum);
+                return command;
+            }
+            else
+            {
+                return null;
+            }
         }
-
-        
     }
 }

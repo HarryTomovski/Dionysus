@@ -1,5 +1,6 @@
 ﻿using Dionysus.DBAccess.Interfaces;
 using Dionysus.DBModels;
+using Dionysus.DTO_s;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,7 @@ namespace Dionysus.DBAccess
             }
         }
 
+        //for raspberry
         public async Task<List<EnvironmentalReading>> getEnvironmentalValuesForPastMinute()
         {
             List<EnvironmentalReading> list = new();
@@ -45,7 +47,7 @@ namespace Dionysus.DBAccess
                 }
                 catch (Exception)
                 {
-                    return list;
+                    return null;
                 }
             }
 
@@ -64,10 +66,8 @@ namespace Dionysus.DBAccess
                 }
                 catch (Exception e)
                 {
-
                     Console.WriteLine(e.Message);
-                    return list;
-                    
+                    return null;
                 }
             }
         }
@@ -104,6 +104,62 @@ namespace Dionysus.DBAccess
                 {
                     Console.WriteLine(e.Message);
                     return 0;
+                }
+            }
+        }
+
+        public async Task<int> setManualControl(bool enableManualControl)
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    //add the db access for setting the targeted  value
+                    //await Task.Run(() => context.EnvironmentalReadings.Where(d => d.DateTime.Value.Date == date.Date).ToList());
+                    return 1;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return 0;
+                }
+            }
+        }
+
+        public async Task<int> setMachineState(bool setTemperatureControl, bool setHumidityControl)
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    //add the db access for setting the targeted  value
+                    //await Task.Run(() => context.EnvironmentalReadings.Where(d => d.DateTime.Value.Date == date.Date).ToList());
+                    return 1;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return 0;
+                }
+            }
+        }
+
+        public async Task<ManualControlStates> getMachineState()
+        {
+           
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    ManualControlStates states = new(true, false, true);
+                    //add the db access for setting the targeted  value
+                    //state = await Task.Run(() => context.EnvironmentalReadings.Where(d => d.DateTime.Value.Date == date.Date).ToList());
+                    return states;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return null;
                 }
             }
         }

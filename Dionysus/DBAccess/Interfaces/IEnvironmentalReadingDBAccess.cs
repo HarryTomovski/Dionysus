@@ -1,4 +1,5 @@
 ﻿using Dionysus.DBModels;
+using Dionysus.DTO_s;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,8 @@ namespace Dionysus.DBAccess.Interfaces
 
         public Task<int> setTemperatureTarget(double temperature);
         public Task<int> setHumidityTarget(double humidity);
+        Task<int> setManualControl(bool enableManualControl);
+        Task<int> setMachineState(bool setTemperatureControl, bool setHumidityControl);
+        Task<ManualControlStates> getMachineState();
     }
 }

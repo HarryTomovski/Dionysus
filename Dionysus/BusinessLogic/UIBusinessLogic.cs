@@ -18,25 +18,20 @@ namespace Dionysus.BusinessLogic
         }
         public async Task<AvarageDataReadingDTO> getAvarageReadingForDate(DateTime date)
         {
-            
-            double avarageHumidity = 0;
-            double avarageTemperature = 0;
-            var count = 0;
             var readingsList = await environmentalReadingDBAccess.getReadingsForDate(date);
-
-            foreach (var reading in readingsList)
+            if (readingsList is not null)
             {
-                avarageHumidity += reading.HumidityReading.Value;
-                avarageTemperature += reading.TemperatureReading.Value;
-                count++;
+                double? avarageTemperature = readingsList.Select(t => t.TemperatureReading).Average();
+                double? avarageHumidity = readingsList.Select(h => h.HumidityReading).Average();
+
+                var dto = new AvarageDataReadingDTO(avarageHumidity, avarageTemperature, date.Date);
+
+                return dto;
             }
-
-            avarageHumidity /= count;
-            avarageTemperature /= count;
-            var dto = new AvarageDataReadingDTO(avarageHumidity, avarageTemperature, date.Date);
-
-            return dto;
-
+            else 
+            {
+                return null;
+            }
         }
 
         public async Task<int> setHumidityTarget(double humidity)
@@ -49,6 +44,24 @@ namespace Dionysus.BusinessLogic
         {
 
             int result = await environmentalReadingDBAccess.setTemperatureTarget(temperature);
+            return result;
+        }
+
+        public async Task<int> setManualControl(bool enableManualControl)
+        {
+            int result = await environmentalReadingDBAccess.setManualControl(enableManualControl);
+            return result;
+        }
+
+        public async Task<int> setMachineState(bool setTemperatureControl, bool setHumidityControl)
+        {
+            int result = await environmentalReadingDBAccess.setMachineState(setTemperatureControl, setHumidityControl);
+            return result;
+        }
+
+        public async Task<ManualControlStates> getMachineState()
+        {
+            ManualControlStates result = await environmentalReadingDBAccess.getMachineState();
             return result;
         }
     }
