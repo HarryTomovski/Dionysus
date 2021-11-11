@@ -11,5 +11,6 @@ namespace Dionysus.BusinessLogic.Interfaces
         public Task<AvarageDataReadingDTO> getAvarageReadingForDate(DateTime date);
 
         public Task<int> setTemperatureTarget(double temperature);
+        Task<int> setHumidityTarget(double humidity);
     }
 }

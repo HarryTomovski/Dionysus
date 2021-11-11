@@ -39,6 +39,12 @@ namespace Dionysus.BusinessLogic
 
         }
 
+        public async Task<int> setHumidityTarget(double humidity)
+        {
+            int result = await environmentalReadingDBAccess.setHumidityTarget(humidity);
+            return result;
+        }
+
         public async Task<int> setTemperatureTarget(double temperature)
         {
 

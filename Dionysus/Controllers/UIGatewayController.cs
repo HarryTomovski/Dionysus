@@ -67,5 +67,29 @@ namespace Dionysus.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
+
+        [HttpPost]
+        [Route("[controller]/setHumidityTarget")]
+        public async Task<ActionResult> setHumidityTarget([FromHeader] double humidity)
+        {
+
+            try
+            {
+                int result = await uIBusinessLogic.setHumidityTarget(humidity);
+                if (result == 1)
+                {
+                    return StatusCode(StatusCodes.Status200OK, humidity);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status404NotFound);
+                }
+            }
+            catch (Exception e)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
     }
 }

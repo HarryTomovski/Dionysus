@@ -90,5 +90,22 @@ namespace Dionysus.DBAccess
             }
         }
 
+        public async Task<int> setHumidityTarget(double humidity)
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    //add the db access for setting the targeted  value
+                    //await Task.Run(() => context.EnvironmentalReadings.Where(d => d.DateTime.Value.Date == date.Date).ToList());
+                    return 1;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return 0;
+                }
+            }
+        }
     }
 }

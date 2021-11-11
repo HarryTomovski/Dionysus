@@ -14,5 +14,6 @@ namespace Dionysus.DBAccess.Interfaces
         public Task<List<EnvironmentalReading>> getReadingsForDate(DateTime date);
 
         public Task<int> setTemperatureTarget(double temperature);
+        public Task<int> setHumidityTarget(double humidity);
     }
 }
