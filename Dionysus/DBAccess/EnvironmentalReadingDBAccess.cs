@@ -163,5 +163,24 @@ namespace Dionysus.DBAccess
                 }
             }
         }
+
+        public async Task<bool> getManualControl()
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    bool state = false;
+                    //add the db access for setting the targeted  value
+                    //state = await Task.Run(() => context.EnvironmentalReadings.Where(d => d.DateTime.Value.Date == date.Date).ToList());
+                    return state;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return false;
+                }
+            }
+        }
     }
 }

@@ -19,5 +19,7 @@ namespace Dionysus.DBAccess.Interfaces
         Task<int> setManualControl(bool enableManualControl);
         Task<int> setMachineState(bool setTemperatureControl, bool setHumidityControl);
         Task<ManualControlStates> getMachineState();
+
+        Task<bool> getManualControl();
     }
 }
