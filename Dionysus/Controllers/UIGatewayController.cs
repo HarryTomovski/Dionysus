@@ -21,8 +21,9 @@ namespace Dionysus.Controllers
             this.uIBusinessLogic = uIBusinessLogic;
 
         }
-        [HttpGet("{date}")]
-        public async Task<ActionResult<AvarageDataReadingDTO>> getAvarageReadingsForDate([FromHeader]DateTime date)
+        [HttpGet]
+        [Route("getReadingsForDate/{date}")]
+        public async Task<ActionResult<AvarageDataReadingDTO>> getAvarageReadingsForDate(DateTime date)
         {
            //might not need try catch here necause we have it in the db access class
             try
@@ -44,7 +45,7 @@ namespace Dionysus.Controllers
         }
 
         [HttpPost]
-        [Route("[controller]/setTemperatureTarget")]
+        [Route("setTemperatureTarget")]
         public async Task<ActionResult> setTemperatureTarget([FromHeader] double temperature)
         {
 
@@ -68,7 +69,7 @@ namespace Dionysus.Controllers
         }
 
         [HttpPost]
-        [Route("[controller]/setHumidityTarget")]
+        [Route("setHumidityTarget")]
         public async Task<ActionResult> setHumidityTarget([FromHeader] double humidity)
         {
 
@@ -92,7 +93,7 @@ namespace Dionysus.Controllers
         }
 
         [HttpPost]
-        [Route("[controller]/setManualControl")]
+        [Route("setManualControl")]
         public async Task<ActionResult> setManualControl([FromHeader] bool enableManualControl)
         {
 
@@ -116,7 +117,7 @@ namespace Dionysus.Controllers
         }
 
         [HttpPost]
-        [Route("[controller]/setMachineState")]
+        [Route("setMachineState")]
         public async Task<ActionResult> setMachineState([FromHeader] bool setTemperatureControl, [FromHeader] bool setHumidityControl)
         {
 
@@ -140,7 +141,7 @@ namespace Dionysus.Controllers
         }
 
         [HttpPost]
-        [Route("[controller]/getMachineStates")]
+        [Route("getMachineStates")]
         public async Task<ActionResult> getMachineStates()
         {
             try

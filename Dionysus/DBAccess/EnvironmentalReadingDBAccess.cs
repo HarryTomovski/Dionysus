@@ -61,7 +61,7 @@ namespace Dionysus.DBAccess
             {
                 try
                 {
-                    list = await Task.Run(() => context.EnvironmentalReadings.Where(d => d.DateTime.Value.Date == date.Date).ToList());
+                    //list = await Task.Run(() => context.EnvironmentalReadings.Where(d => d.DateTime.Value.Date == date.Date).ToList());
                     return list;
                 }
                 catch (Exception e)
