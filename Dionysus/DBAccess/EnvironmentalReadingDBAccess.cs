@@ -79,7 +79,7 @@ namespace Dionysus.DBAccess
                 try
                 {
                     //add the db access for setting the targeted  value
-                    //await Task.Run(() => context.EnvironmentalReadings.Where(d => d.DateTime.Value.Date == date.Date).ToList());
+                    //await Task.Run(() => context.Batches.Update;
                     return 1;
                 }
                 catch (Exception e)
