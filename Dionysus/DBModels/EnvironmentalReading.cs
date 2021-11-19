@@ -14,11 +14,22 @@ namespace Dionysus.DBModels
         [Key]
         [Column("reading_id")]
         public int ReadingId { get; set; }
+        [Column("sensorPinNumber")]
+        public int SensorPinNumber { get; set; }
+        [Column("batch_id")]
+        public int BatchId { get; set; }
         [Column("temperature_reading")]
-        public double? TemperatureReading { get; set; }
+        public double TemperatureReading { get; set; }
         [Column("humidity_reading")]
-        public double? HumidityReading { get; set; }
+        public double HumidityReading { get; set; }
         [Column("date_time", TypeName = "datetime")]
-        public DateTime? DateTime { get; set; }
+        public DateTime DateTime { get; set; }
+
+        [ForeignKey(nameof(BatchId))]
+        [InverseProperty("EnvironmentalReadings")]
+        public virtual Batch Batch { get; set; }
+        [ForeignKey(nameof(SensorPinNumber))]
+        [InverseProperty(nameof(Sensor.EnvironmentalReadings))]
+        public virtual Sensor SensorPinNumberNavigation { get; set; }
     }
 }
