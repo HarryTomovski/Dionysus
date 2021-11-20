@@ -176,7 +176,14 @@ namespace Dionysus.DBAccess
                 try
                 {
                     //add the db access for setting the targeted  value
-                    //await Task.Run(() => context.EnvironmentalReadings.Where(d => d.DateTime.Value.Date == date.Date).ToList());
+                    var machine = await Task.Run(() => context.EnvironmentalControllers.Where(p => p.ControllerPinNumber == pin).FirstOrDefault());
+                    machine.State = machineState;
+                    //update db
+                    context.EnvironmentalControllers.Attach(machine);
+                    context.Entry(machine).Property(s => s.State).IsModified = true;
+
+                    //save changes
+                    context.SaveChanges();
                     return 1;
                 }
                 catch (Exception e)
