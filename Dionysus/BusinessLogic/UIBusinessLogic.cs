@@ -1,5 +1,6 @@
 ﻿using Dionysus.BusinessLogic.Interfaces;
 using Dionysus.DBAccess.Interfaces;
+using Dionysus.DBModels;
 using Dionysus.DTO_s;
 using System;
 using System.Collections.Generic;
@@ -47,21 +48,39 @@ namespace Dionysus.BusinessLogic
             return result;
         }
 
-        public async Task<int> setManualControl(bool enableManualControl)
+        public async Task<int> setManualControl(bool enableManualControl, int pin)
         {
-            int result = await environmentalReadingDBAccess.setManualControl(enableManualControl);
+            int result = await environmentalReadingDBAccess.setManualControl(enableManualControl, pin);
             return result;
         }
 
-        public async Task<int> setMachineState(bool setTemperatureControl, bool setHumidityControl)
+        public async Task<int> setMachineState(bool machineState, int pin)
         {
-            int result = await environmentalReadingDBAccess.setMachineState(setTemperatureControl, setHumidityControl);
+            int result = await environmentalReadingDBAccess.setMachineState(machineState, pin);
             return result;
         }
 
-        public async Task<ManualControlStates> getMachineState()
+        public async Task<bool> getMachineState(int pin)
         {
-            ManualControlStates result = await environmentalReadingDBAccess.getMachineState();
+            var result = await environmentalReadingDBAccess.getMachineState(pin);
+            return result;
+        }
+
+        public async Task<int> addBatch(Batch batch)
+        {
+            var result = await environmentalReadingDBAccess.addBatch(batch);
+            return result;
+        }
+
+        public async Task<int> addEnvironmentalController(EnvironmentalController controller)
+        {
+            var result = await environmentalReadingDBAccess.addEnvironmentalController(controller);
+            return result;
+        }
+
+        public async Task<int> addSensor(Sensor sensor)
+        {
+            var result = await environmentalReadingDBAccess.addSensor(sensor);
             return result;
         }
     }

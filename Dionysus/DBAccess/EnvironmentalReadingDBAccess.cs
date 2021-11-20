@@ -61,7 +61,7 @@ namespace Dionysus.DBAccess
             {
                 try
                 {
-                    //list = await Task.Run(() => context.EnvironmentalReadings.Where(d => d.DateTime.Value.Date == date.Date).ToList());
+                    list = await Task.Run(() => context.EnvironmentalReadings.Where(d => d.DateTime.Date == date.Date).ToList());
                     return list;
                 }
                 catch (Exception e)
@@ -90,6 +90,24 @@ namespace Dionysus.DBAccess
             }
         }
 
+        public async Task<double> getTemperatureTarget()
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    //add the db access for setting the targeted  value
+                    var tempTarget = await Task.Run(() => context.Batches.Select(t => t.TargetTemperature).FirstOrDefault());
+                    return tempTarget;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return 0;
+                }
+            }
+        }
+
         public async Task<int> setHumidityTarget(double humidity)
         {
             using (var context = new DionysusContext())
@@ -108,15 +126,39 @@ namespace Dionysus.DBAccess
             }
         }
 
-        public async Task<int> setManualControl(bool enableManualControl)
+        public async Task<double> getHumidityTarget()
         {
             using (var context = new DionysusContext())
             {
                 try
                 {
                     //add the db access for setting the targeted  value
-                    //await Task.Run(() => context.EnvironmentalReadings.Where(d => d.DateTime.Value.Date == date.Date).ToList());
-                    //return a tuple 
+                    var humTarget = await Task.Run(() => context.Batches.Select(h => h.TargetHumidity).FirstOrDefault());
+                    return humTarget;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return 0;
+                }
+            }
+        }
+
+        public async Task<int> setManualControl(bool enableManualControl, int pin)
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    //add the db access for setting the targeted  value
+                    var machine = await Task.Run(() => context.EnvironmentalControllers.Where(p => p.ControllerPinNumber == pin).FirstOrDefault());
+                    machine.Mode = enableManualControl;
+                    //update db
+                    context.EnvironmentalControllers.Attach(machine);
+                    context.Entry(machine).Property(m => m.Mode).IsModified = true;
+
+                    //save changes
+                    context.SaveChanges();
                     return 1;
                 }
                 catch (Exception e)
@@ -127,7 +169,7 @@ namespace Dionysus.DBAccess
             }
         }
 
-        public async Task<int> setMachineState(bool setTemperatureControl, bool setHumidityControl)
+        public async Task<int> setMachineState(bool machineState, int pin)
         {
             using (var context = new DionysusContext())
             {
@@ -145,41 +187,95 @@ namespace Dionysus.DBAccess
             }
         }
 
-        public async Task<ManualControlStates> getMachineState()
-        {
-           
-            using (var context = new DionysusContext())
-            {
-                try
-                {
-                    ManualControlStates states = new(true, false, true);
-                    //add the db access for setting the targeted  value
-                    //state = await Task.Run(() => context.EnvironmentalReadings.Where(d => d.DateTime.Value.Date == date.Date).ToList());
-                    return states;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    return null;
-                }
-            }
-        }
-
-        public async Task<bool> getManualControl()
+        public async Task<bool> getMachineState(int pin)
         {
             using (var context = new DionysusContext())
             {
                 try
                 {
-                    bool state = false;
                     //add the db access for setting the targeted  value
-                    //state = await Task.Run(() => context.EnvironmentalReadings.Where(d => d.DateTime.Value.Date == date.Date).ToList());
+                    var state = await Task.Run(() => context.EnvironmentalControllers.Where(p => p.ControllerPinNumber == pin).Select(s => s.State).FirstOrDefault());
                     return state;
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                     return false;
+                }
+            }
+        }
+
+        public async Task<bool> getManualControl(int pin)
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    //add the db access for setting the targeted  value
+                    bool state = await Task.Run(() => context.EnvironmentalControllers.Where(p => p.ControllerPinNumber == pin).Select(s => s.Mode).FirstOrDefault());
+                    return state;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return false;
+                }
+            }
+        }
+
+        public async Task<int> addBatch(Batch batch)
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    //add the db access for setting the targeted  value
+                    await Task.Run(() => context.Batches.Add(batch));
+                    context.SaveChanges();
+                    return batch.BatchId;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return -1;
+                }
+            }
+        }
+
+        public async Task<int> addEnvironmentalController(EnvironmentalController controller)
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    //add the db access for setting the targeted  value
+                    await Task.Run(() => context.EnvironmentalControllers.Add(controller));
+                    context.SaveChanges();
+                    return controller.ControllerPinNumber;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return -1;
+                }
+            }
+        }
+
+        public async Task<int> addSensor(Sensor sensor)
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    //add the db access for setting the targeted  value
+                    await Task.Run(() => context.Sensors.Add(sensor));
+                    context.SaveChanges();
+                    return sensor.SensorPinNumber;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return -1;
                 }
             }
         }

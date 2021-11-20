@@ -7,13 +7,12 @@ namespace Dionysus.Models
 {
     public class Command
     {
-        public bool ActivateTemperatureDevice { get; private set; }
-        public bool ActivateHumidityDevice { get; private set; }
+        public bool? ActivateTemperatureDevice { get; set; }
+        public bool? ActivateHumidityDevice { get; set; }
 
-        public Command(bool temperature, bool humidity)
+
+        public Command()
         {
-            ActivateTemperatureDevice = temperature;
-            ActivateHumidityDevice = humidity;
         }
     }
 }

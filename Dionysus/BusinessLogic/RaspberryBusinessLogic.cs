@@ -26,38 +26,44 @@ namespace Dionysus.BusinessLogic
             return success;   
         }
 
-        public async Task<Command> getCommand()
+        public async Task<Command> getCommand(int temperaturePin, int humidityPin)
         {
-            var manualControl = await environmentalReadingDBAccess.getManualControl();
-            Command command;
-            if(manualControl == false)
+            var manualControlTemp = await environmentalReadingDBAccess.getManualControl(temperaturePin);
+            var manualControlHum = await environmentalReadingDBAccess.getManualControl(humidityPin);
+
+            double targetedTemp = await environmentalReadingDBAccess.getTemperatureTarget();
+            double targetedHum = await environmentalReadingDBAccess.getHumidityTarget();
+
+            //temperature values for the past minute
+            var environmentalValues = await environmentalReadingDBAccess.getEnvironmentalValuesForPastMinute();
+
+            double? averageTemp;
+            double? averageHum;
+
+            Command command = new();
+
+            if(manualControlTemp == false)
             {
-                //temperature values for the past minute
-                var environmentalValues = await environmentalReadingDBAccess.getEnvironmentalValuesForPastMinute();
-                if (environmentalValues is not null)
-                {
-                    //maybe store average environmental values in db so they can be updated
-                    //for now have them static here
-                    double targetedTemp = 20.5;
-                    double targetedHum = 60.5;
-
-                    double? averageTemp = environmentalValues.Select(t => t.TemperatureReading).ToList().Average();
-                    double? averageHum = environmentalValues.Select(h => h.HumidityReading).ToList().Average();
-
-                    command = new Command(averageTemp > targetedTemp, averageHum > targetedHum);
-                    return command;
-                }
-                else
-                {
-                    return null;
-                }
+                averageTemp = environmentalValues.Select(t => t.TemperatureReading).ToList().Average();
+                //activate heater
+                command.ActivateTemperatureDevice = averageTemp < targetedTemp;
             }
             else
             {
-                var machineStates = await environmentalReadingDBAccess.getMachineState();
-                command = new(machineStates.temperatureControl, machineStates.humidityControl);
-                return command;
+                command.ActivateTemperatureDevice = await environmentalReadingDBAccess.getMachineState(temperaturePin);
             }
+            if (manualControlHum == false)
+            {
+                averageHum = environmentalValues.Select(h => h.HumidityReading).ToList().Average();
+                //activate dehumidifier
+                command.ActivateHumidityDevice = averageHum > targetedHum;
+            }
+            else
+            {
+                command.ActivateHumidityDevice = await environmentalReadingDBAccess.getMachineState(humidityPin);
+            }
+
+            return command;
         }
     }
 }

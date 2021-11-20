@@ -31,8 +31,6 @@ namespace Dionysus.Controllers
         {
             try
             {
-                //For debug without DB purposes
-               // var success = true;
                 var success = await environmentalreadingBusinessLogic.storeReading(reading);
                 _logger.LogInformation(reading.DateTime.ToString());
                 if (success)
@@ -53,12 +51,12 @@ namespace Dionysus.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> getCommand()
+        public async Task<ActionResult> getCommand([FromHeader] int temperaturePin, [FromHeader] int humidityPin)
         {
             try
             {
                 //get command based of average from last 1 minute
-                var command = await environmentalreadingBusinessLogic.getCommand();
+                var command = await environmentalreadingBusinessLogic.getCommand(temperaturePin, humidityPin);
                 if (command is not null)
                 {
                     return StatusCode(StatusCodes.Status200OK, command);

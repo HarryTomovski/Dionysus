@@ -94,12 +94,12 @@ namespace Dionysus.Controllers
 
         [HttpPost]
         [Route("setManualControl")]
-        public async Task<ActionResult> setManualControl([FromHeader] bool enableManualControl)
+        public async Task<ActionResult> setManualControl([FromHeader] bool enableManualControl, [FromHeader] int pinNo)
         {
 
             try
             {
-                int result = await uIBusinessLogic.setManualControl(enableManualControl);
+                int result = await uIBusinessLogic.setManualControl(enableManualControl, pinNo);
                 if (result == 1)
                 {
                     return StatusCode(StatusCodes.Status200OK, enableManualControl);
@@ -118,15 +118,15 @@ namespace Dionysus.Controllers
 
         [HttpPost]
         [Route("setMachineState")]
-        public async Task<ActionResult> setMachineState([FromHeader] bool setTemperatureControl, [FromHeader] bool setHumidityControl)
+        public async Task<ActionResult> setMachineState([FromHeader] bool setTemperatureControl, [FromHeader] int pin)
         {
 
             try
             {
-                int result = await uIBusinessLogic.setMachineState(setTemperatureControl, setHumidityControl);
+                int result = await uIBusinessLogic.setMachineState(setTemperatureControl, pin);
                 if (result == 1)
                 {
-                    return StatusCode(StatusCodes.Status200OK, setTemperatureControl || setHumidityControl);
+                    return StatusCode(StatusCodes.Status200OK, result);
                 }
                 else
                 {
@@ -142,23 +142,85 @@ namespace Dionysus.Controllers
 
         [HttpPost]
         [Route("getMachineStates")]
-        public async Task<ActionResult> getMachineStates()
+        public async Task<ActionResult> getMachineStates([FromHeader] int pin)
         {
             try
             {
-                ManualControlStates result = await uIBusinessLogic.getMachineState();
-                if (result is not null)
+                var result = await uIBusinessLogic.getMachineState(pin);
+                return StatusCode(StatusCodes.Status200OK, result);
+                
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("addBatch")]
+        public async Task<ActionResult> addBatch(Batch batch)
+        {
+            try
+            {
+                var result = await uIBusinessLogic.addBatch(batch);
+                if(result != -1)
                 {
                     return StatusCode(StatusCodes.Status200OK, result);
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status404NotFound);
+                    return StatusCode(StatusCodes.Status400BadRequest);
                 }
+
             }
             catch (Exception e)
             {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
 
+        [HttpPost]
+        [Route("addController")]
+        public async Task<ActionResult> addController(EnvironmentalController controller)
+        {
+            try
+            {
+                var result = await uIBusinessLogic.addEnvironmentalController(controller);
+                if (result != -1)
+                {
+                    return StatusCode(StatusCodes.Status200OK, result);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest);
+                }
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("addSensor")]
+        public async Task<ActionResult> addSensor(Sensor sensor)
+        {
+            try
+            {
+                var result = await uIBusinessLogic.addSensor(sensor);
+                if (result != -1)
+                {
+                    return StatusCode(StatusCodes.Status200OK, result);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest);
+                }
+
+            }
+            catch (Exception e)
+            {
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }

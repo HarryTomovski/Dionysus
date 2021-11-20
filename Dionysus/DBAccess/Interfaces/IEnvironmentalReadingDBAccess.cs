@@ -9,17 +9,21 @@ namespace Dionysus.DBAccess.Interfaces
 {
     public interface IEnvironmentalReadingDBAccess
     {
-        public Task<bool> StoreReading(EnvironmentalReading reading);
+        Task<bool> StoreReading(EnvironmentalReading reading);
 
-        public Task<List<EnvironmentalReading>> getEnvironmentalValuesForPastMinute();
-        public Task<List<EnvironmentalReading>> getReadingsForDate(DateTime date);
+        Task<List<EnvironmentalReading>> getEnvironmentalValuesForPastMinute();
+        Task<List<EnvironmentalReading>> getReadingsForDate(DateTime date);
 
-        public Task<int> setTemperatureTarget(double temperature);
-        public Task<int> setHumidityTarget(double humidity);
-        Task<int> setManualControl(bool enableManualControl);
-        Task<int> setMachineState(bool setTemperatureControl, bool setHumidityControl);
-        Task<ManualControlStates> getMachineState();
-
-        Task<bool> getManualControl();
+        Task<int> setTemperatureTarget(double temperature);
+        Task<double> getTemperatureTarget();
+        Task<int> setHumidityTarget(double humidity);
+        Task<double> getHumidityTarget();
+        Task<int> setManualControl(bool enableManualControl, int pin);
+        Task<int> setMachineState(bool machineState, int pin);
+        Task<bool> getMachineState(int pin);
+        Task<bool> getManualControl(int pin);
+        Task<int> addBatch(Batch batch);
+        Task<int> addEnvironmentalController(EnvironmentalController controller);
+        Task<int> addSensor(Sensor sensor);
     }
 }
