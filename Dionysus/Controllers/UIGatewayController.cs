@@ -118,12 +118,12 @@ namespace Dionysus.Controllers
 
         [HttpPost]
         [Route("setMachineState")]
-        public async Task<ActionResult> setMachineState([FromHeader] bool machineState, [FromHeader] int pin)
+        public async Task<ActionResult> setMachineState([FromHeader] bool machineState, [FromHeader] int pinNo)
         {
 
             try
             {
-                int result = await uIBusinessLogic.setMachineState(machineState, pin);
+                int result = await uIBusinessLogic.setMachineState(machineState, pinNo);
                 if (result == 1)
                 {
                     return StatusCode(StatusCodes.Status200OK, result);
