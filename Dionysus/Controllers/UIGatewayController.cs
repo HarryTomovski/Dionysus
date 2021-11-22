@@ -250,12 +250,12 @@ namespace Dionysus.Controllers
 
         [HttpPost]
         [Route("addUser")]
-        public async Task<ActionResult> addUser(User user, [FromHeader] string uuid)
+        public async Task<ActionResult> addUser(User user, [FromHeader] string? validationCode)
         {
             try
             {
-                var result = await uIBusinessLogic.addUser(user);
-                if (result != -1)
+                var result = await uIBusinessLogic.addUser(user, validationCode);
+                if (result is not null)
                 {
                     return StatusCode(StatusCodes.Status200OK, result);
                 }

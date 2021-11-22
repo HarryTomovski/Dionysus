@@ -200,7 +200,6 @@ namespace Dionysus.DBAccess
             {
                 try
                 {
-                    //add the db access for setting the targeted  value
                     var state = await Task.Run(() => context.EnvironmentalControllers.Where(p => p.ControllerPinNumber == pin).Select(s => s.State).FirstOrDefault());
                     return state;
                 }
@@ -218,7 +217,6 @@ namespace Dionysus.DBAccess
             {
                 try
                 {
-                    //add the db access for setting the targeted  value
                     bool state = await Task.Run(() => context.EnvironmentalControllers.Where(p => p.ControllerPinNumber == pin).Select(s => s.Mode).FirstOrDefault());
                     return state;
                 }
@@ -236,7 +234,6 @@ namespace Dionysus.DBAccess
             {
                 try
                 {
-                    //add the db access for setting the targeted  value
                     await Task.Run(() => context.Batches.Add(batch));
                     context.SaveChanges();
                     return batch.BatchId;
@@ -255,7 +252,6 @@ namespace Dionysus.DBAccess
             {
                 try
                 {
-                    //add the db access for setting the targeted  value
                     await Task.Run(() => context.EnvironmentalControllers.Add(controller));
                     context.SaveChanges();
                     return controller.ControllerPinNumber;
@@ -263,7 +259,7 @@ namespace Dionysus.DBAccess
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
-                    return -1;
+                    return 0;
                 }
             }
         }
@@ -274,7 +270,6 @@ namespace Dionysus.DBAccess
             {
                 try
                 {
-                    //add the db access for setting the targeted  value
                     await Task.Run(() => context.Sensors.Add(sensor));
                     context.SaveChanges();
                     return sensor.SensorPinNumber;
@@ -283,6 +278,93 @@ namespace Dionysus.DBAccess
                 {
                     Console.WriteLine(e.Message);
                     return -1;
+                }
+            }
+        }
+
+        public async Task<int> addRating(Rating rating)
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    await Task.Run(() => context.Ratings.Add(rating));
+                    context.SaveChanges();
+                    return 1;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return 0;
+                }
+            }
+        }
+
+        public async Task<User> addUser(User user)
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    await Task.Run(() => context.Users.Add(user));
+                    context.SaveChanges();
+                    return user;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return null;
+                }
+            }
+        }
+
+        public async Task<User> getUser(string username)
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    var user = await Task.Run(() => context.Users.Find(username));
+                    return user;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return null;
+                }
+            }
+        }
+
+        public async Task<string> getValidationCode(string validationCode)
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    var code = await Task.Run(() => context.ElevationCodes.Find(validationCode));
+                    return code.Code;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return null;
+                }
+            }
+        }
+
+        public async Task removeValidationCode(string validationCode)
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    var code = await Task.Run(() => context.ElevationCodes.Find(validationCode));
+                    await Task.Run(() => context.ElevationCodes.Remove(code));
+                    context.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
                 }
             }
         }

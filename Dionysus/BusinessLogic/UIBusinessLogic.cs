@@ -1,6 +1,7 @@
 ﻿using Dionysus.BusinessLogic.Interfaces;
 using Dionysus.DBAccess.Interfaces;
 using Dionysus.DBModels;
+using Dionysus.Models;
 using Dionysus.DTO_s;
 using System;
 using System.Collections.Generic;
@@ -82,6 +83,39 @@ namespace Dionysus.BusinessLogic
         {
             var result = await environmentalReadingDBAccess.addSensor(sensor);
             return result;
+        }
+
+        public async Task<int> addRating(Rating rating)
+        {
+            var result = await environmentalReadingDBAccess.addRating(rating);
+            return result;
+        }
+
+        public async Task<User> addUser(User user, string? validationCode)
+        {
+            var usernameValid = environmentalReadingDBAccess.getUser(user.Username);
+            if(usernameValid is null)
+            {
+                if(user.Role == UserEnums.Somelier.ToString())
+                {
+                    var valCode = await environmentalReadingDBAccess.getValidationCode(validationCode);
+                    if(valCode is not null && valCode.Equals(validationCode))
+                    {
+                        var result = await environmentalReadingDBAccess.addUser(user);
+                        if(result is not null)
+                        {
+                            await environmentalReadingDBAccess.removeValidationCode(validationCode);
+                            return result;
+                        }
+                    }
+                }
+                else
+                {
+                    var result = await environmentalReadingDBAccess.addUser(user);
+                    return result;
+                }
+            }
+            return null;
         }
     }
 }
