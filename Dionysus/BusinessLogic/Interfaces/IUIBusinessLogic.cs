@@ -20,5 +20,7 @@ namespace Dionysus.BusinessLogic.Interfaces
 
         Task<int> addEnvironmentalController(EnvironmentalController controller);
         Task<int> addSensor(Sensor sensor);
+        Task<int> addRating(Rating rating);
+        Task<int> addUser(User user);
     }
 }

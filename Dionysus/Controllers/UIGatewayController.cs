@@ -224,5 +224,51 @@ namespace Dionysus.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
+
+        [HttpPost]
+        [Route("addRating")]
+        public async Task<ActionResult> addRating(Rating rating)
+        {
+            try
+            {
+                var result = await uIBusinessLogic.addRating(rating);
+                if (result != -1)
+                {
+                    return StatusCode(StatusCodes.Status200OK, result);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest);
+                }
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("addUser")]
+        public async Task<ActionResult> addUser(User user, [FromHeader] string uuid)
+        {
+            try
+            {
+                var result = await uIBusinessLogic.addUser(user);
+                if (result != -1)
+                {
+                    return StatusCode(StatusCodes.Status200OK, result);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest);
+                }
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
     }
 }
