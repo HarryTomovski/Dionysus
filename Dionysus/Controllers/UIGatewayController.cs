@@ -44,6 +44,35 @@ namespace Dionysus.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
+        [HttpGet]
+        [Route("getOverallAvarage/{date}/{batchId}")]
+        public async Task<ActionResult<AvarageDataReadingDTO>> getReadingsSinceBeginning(DateTime date,int batchId)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var overallAvarageReading = await uIBusinessLogic.getAvarageReadingSinceBeginning(date, batchId);
+                    if (overallAvarageReading != null)
+                    {
+                        return StatusCode(StatusCodes.Status200OK, overallAvarageReading);
+                    }
+                    else
+                    {
+                        return StatusCode(StatusCodes.Status404NotFound);
+                    }
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest);
+                }
+            }
+            catch (Exception e)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
 
         //make get target based on batch id
         //check if the target is set, if yes then update
