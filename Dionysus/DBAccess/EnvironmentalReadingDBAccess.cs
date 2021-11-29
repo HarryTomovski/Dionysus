@@ -156,14 +156,14 @@ namespace Dionysus.DBAccess
             }
         }
 
-        public async Task<int> setManualControl(bool enableManualControl, int pin)
+        public async Task<int> setManualControl(bool enableManualControl, int pin, int batchId)
         {
             using (var context = new DionysusContext())
             {
                 try
                 {
                     //add the db access for setting the targeted  value
-                    var machine = await Task.Run(() => context.EnvironmentalControllers.Where(p => p.ControllerPinNumber == pin).FirstOrDefault());
+                    var machine = await Task.Run(() => context.EnvironmentalControllers.Where(p => p.ControllerPinNumber == pin && p.BatchId == batchId).FirstOrDefault());
                     machine.Mode = enableManualControl;
                     //update db
                     context.EnvironmentalControllers.Attach(machine);
@@ -181,14 +181,14 @@ namespace Dionysus.DBAccess
             }
         }
 
-        public async Task<int> setMachineState(bool machineState, int pin)
+        public async Task<int> setMachineState(bool machineState, int pin, int batchId)
         {
             using (var context = new DionysusContext())
             {
                 try
                 {
                     //add the db access for setting the targeted  value
-                    var machine = await Task.Run(() => context.EnvironmentalControllers.Where(p => p.ControllerPinNumber == pin).FirstOrDefault());
+                    var machine = await Task.Run(() => context.EnvironmentalControllers.Where(p => p.ControllerPinNumber == pin && p.BatchId == batchId).FirstOrDefault());
                     machine.State = machineState;
                     //update db
                     context.EnvironmentalControllers.Attach(machine);
@@ -206,13 +206,13 @@ namespace Dionysus.DBAccess
             }
         }
 
-        public async Task<bool> getMachineState(int pin)
+        public async Task<bool> getMachineState(int pin, int batchId)
         {
             using (var context = new DionysusContext())
             {
                 try
                 {
-                    var state = await Task.Run(() => context.EnvironmentalControllers.Where(p => p.ControllerPinNumber == pin).Select(s => s.State).FirstOrDefault());
+                    var state = await Task.Run(() => context.EnvironmentalControllers.Where(p => p.ControllerPinNumber == pin && p.BatchId == batchId).Select(s => s.State).FirstOrDefault());
                     return state;
                 }
                 catch (Exception e)
@@ -223,13 +223,13 @@ namespace Dionysus.DBAccess
             }
         }
 
-        public async Task<bool> getManualControl(int pin)
+        public async Task<bool> getManualControl(int pin, int batchId)
         {
             using (var context = new DionysusContext())
             {
                 try
                 {
-                    bool state = await Task.Run(() => context.EnvironmentalControllers.Where(p => p.ControllerPinNumber == pin).Select(s => s.Mode).FirstOrDefault());
+                    bool state = await Task.Run(() => context.EnvironmentalControllers.Where(p => p.ControllerPinNumber == pin && p.BatchId == batchId).Select(s => s.Mode).FirstOrDefault());
                     return state;
                 }
                 catch (Exception e)

@@ -14,9 +14,9 @@ namespace Dionysus.BusinessLogic.Interfaces
         Task<AvarageDataReadingDTO> getAvarageReadingSinceBeginning(DateTime date,int batchId);
         Task<int> setTemperatureTarget(double temperature, int batchId);
         Task<int> setHumidityTarget(double humidity, int batchId);
-        Task<int> setManualControl(bool enableManualControl, int devicePin);
-        Task<int> setMachineState(bool setEnvironmentalControl, int devicePin);
-        Task<bool> getMachineState(int devicePin);
+        Task<int> setManualControl(bool enableManualControl, int devicePin, int batchId);
+        Task<int> setMachineState(bool setEnvironmentalControl, int devicePin, int batchId);
+        Task<bool> getMachineState(int devicePin, int batchId);
         Task<int> addBatch(Batch batch);
         Task<int> addEnvironmentalController(EnvironmentalController controller);
         Task<int> addSensor(Sensor sensor);

@@ -49,11 +49,11 @@ namespace Dionysus.Controllers
         //check if the target is set, if yes then update
         [HttpPut]
         [Route("setTemperatureTarget")]
-        public async Task<ActionResult> setTemperatureTarget([FromHeader] double temperature, int batchId)
+        public async Task<ActionResult> setTemperatureTarget([FromHeader] double temperature, [FromHeader] int batchId)
         {
             try
             {
-                int result = await uIBusinessLogic.setTemperatureTarget(temperature,batchId);
+                int result = await uIBusinessLogic.setTemperatureTarget(temperature, batchId);
                 if (result == 1)
                 {
                     return StatusCode(StatusCodes.Status200OK, temperature);
@@ -79,7 +79,7 @@ namespace Dionysus.Controllers
 
             try
             {
-                int result = await uIBusinessLogic.setHumidityTarget(humidity,batchId);
+                int result = await uIBusinessLogic.setHumidityTarget(humidity, batchId);
                 if (result == 1)
                 {
                     return StatusCode(StatusCodes.Status200OK, humidity);
@@ -98,12 +98,12 @@ namespace Dionysus.Controllers
 
         [HttpPut]
         [Route("setManualControl")]
-        public async Task<ActionResult> setManualControl([FromHeader] bool enableManualControl, [FromHeader] int pinNo)
+        public async Task<ActionResult> setManualControl([FromHeader] bool enableManualControl, [FromHeader] int pinNo, [FromHeader] int batchId)
         {
 
             try
             {
-                int result = await uIBusinessLogic.setManualControl(enableManualControl, pinNo);
+                int result = await uIBusinessLogic.setManualControl(enableManualControl, pinNo, batchId);
                 if (result == 1)
                 {
                     return StatusCode(StatusCodes.Status200OK, enableManualControl);
@@ -122,12 +122,12 @@ namespace Dionysus.Controllers
 
         [HttpPut]
         [Route("setMachineState")]
-        public async Task<ActionResult> setMachineState([FromHeader] bool machineState, [FromHeader] int pinNo)
+        public async Task<ActionResult> setMachineState([FromHeader] bool machineState, [FromHeader] int pinNo, [FromHeader] int batchId)
         {
 
             try
             {
-                int result = await uIBusinessLogic.setMachineState(machineState, pinNo);
+                int result = await uIBusinessLogic.setMachineState(machineState, pinNo, batchId);
                 if (result == 1)
                 {
                     return StatusCode(StatusCodes.Status200OK, result);
@@ -146,11 +146,11 @@ namespace Dionysus.Controllers
 
         [HttpGet]
         [Route("getMachineStates")]
-        public async Task<ActionResult> getMachineStates([FromHeader] int pin)
+        public async Task<ActionResult> getMachineStates([FromHeader] int pin, [FromHeader] int batchId)
         {
             try
             {
-                var result = await uIBusinessLogic.getMachineState(pin);
+                var result = await uIBusinessLogic.getMachineState(pin, batchId);
                 return StatusCode(StatusCodes.Status200OK, result);
                 
             }
@@ -185,7 +185,7 @@ namespace Dionysus.Controllers
 
         [HttpPost]
         [Route("addController")]
-        public async Task<ActionResult> addController(EnvironmentalController controller)
+        public async Task<ActionResult> addController(EnvironmentalController controller, [FromHeader] int batchId)
         {
             try
             {
@@ -208,7 +208,7 @@ namespace Dionysus.Controllers
 
         [HttpPost]
         [Route("addSensor")]
-        public async Task<ActionResult> addSensor(Sensor sensor)
+        public async Task<ActionResult> addSensor(Sensor sensor, [FromHeader] int batchId)
         {
             try
             {

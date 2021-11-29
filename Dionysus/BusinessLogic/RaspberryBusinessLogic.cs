@@ -30,8 +30,8 @@ namespace Dionysus.BusinessLogic
         //have a lower and upper limit 
         public async Task<Command> getCommand(int temperaturePin, int humidityPin, int batchId)
         {
-            var manualControlTemp = await environmentalReadingDBAccess.getManualControl(temperaturePin);
-            var manualControlHum = await environmentalReadingDBAccess.getManualControl(humidityPin);
+            var manualControlTemp = await environmentalReadingDBAccess.getManualControl(temperaturePin, batchId);
+            var manualControlHum = await environmentalReadingDBAccess.getManualControl(humidityPin, batchId);
 
             double targetedTemp = await environmentalReadingDBAccess.getTemperatureTarget(batchId);
             double targetedHum = await environmentalReadingDBAccess.getHumidityTarget(batchId);
@@ -52,7 +52,7 @@ namespace Dionysus.BusinessLogic
             }
             else
             {
-                command.ActivateTemperatureDevice = await environmentalReadingDBAccess.getMachineState(temperaturePin);
+                command.ActivateTemperatureDevice = await environmentalReadingDBAccess.getMachineState(temperaturePin, batchId);
             }
             if (manualControlHum == false)
             {
@@ -62,7 +62,7 @@ namespace Dionysus.BusinessLogic
             }
             else
             {
-                command.ActivateHumidityDevice = await environmentalReadingDBAccess.getMachineState(humidityPin);
+                command.ActivateHumidityDevice = await environmentalReadingDBAccess.getMachineState(humidityPin, batchId);
             }
 
             return command;

@@ -51,21 +51,21 @@ namespace Dionysus.BusinessLogic
             return result;
         }
 
-        public async Task<int> setManualControl(bool enableManualControl, int pin)
+        public async Task<int> setManualControl(bool enableManualControl, int pin, int batchId)
         {
-            int result = await environmentalReadingDBAccess.setManualControl(enableManualControl, pin);
+            int result = await environmentalReadingDBAccess.setManualControl(enableManualControl, pin, batchId);
             return result;
         }
 
-        public async Task<int> setMachineState(bool machineState, int pin)
+        public async Task<int> setMachineState(bool machineState, int pin, int batchId)
         {
-            int result = await environmentalReadingDBAccess.setMachineState(machineState, pin);
+            int result = await environmentalReadingDBAccess.setMachineState(machineState, pin, batchId);
             return result;
         }
 
-        public async Task<bool> getMachineState(int pin)
+        public async Task<bool> getMachineState(int pin, int batchId)
         {
-            var result = await environmentalReadingDBAccess.getMachineState(pin);
+            var result = await environmentalReadingDBAccess.getMachineState(pin, batchId);
             return result;
         }
 

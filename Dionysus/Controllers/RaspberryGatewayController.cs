@@ -50,6 +50,7 @@ namespace Dionysus.Controllers
             }
         }
 
+
         [HttpGet]
         public async Task<ActionResult> getCommand([FromHeader] int temperaturePin, [FromHeader] int humidityPin, [FromHeader] int batchId)
         {

@@ -19,10 +19,10 @@ namespace Dionysus.DBAccess.Interfaces
         Task<double> getTemperatureTarget(int batchId);
         Task<int> setHumidityTarget(double humidity, int batchId);
         Task<double> getHumidityTarget(int batchId);
-        Task<int> setManualControl(bool enableManualControl, int pin);
-        Task<int> setMachineState(bool machineState, int pin);
-        Task<bool> getMachineState(int pin);
-        Task<bool> getManualControl(int pin);
+        Task<int> setManualControl(bool enableManualControl, int pin, int batchId);
+        Task<int> setMachineState(bool machineState, int pin, int batchId);
+        Task<bool> getMachineState(int pin, int batchId);
+        Task<bool> getManualControl(int pin, int batchId);
         Task<int> addBatch(Batch batch);
         Task<int> addEnvironmentalController(EnvironmentalController controller);
         Task<int> addSensor(Sensor sensor);
