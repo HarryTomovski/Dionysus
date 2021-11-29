@@ -72,14 +72,20 @@ namespace Dionysus.DBAccess
             }
         }
 
-        public async Task<int> setTemperatureTarget(double temperature)
+        public async Task<int> setTemperatureTarget(double temperaturen, int batchId)
         {
             using (var context = new DionysusContext())
             {
                 try
                 {
-                    //add the db access for setting the targeted  value
-                    //await Task.Run(() => context.Batches.Update;
+                    var target = await Task.Run(() => context.Batches.Where(p => p.BatchId == batchId).FirstOrDefault());
+                    target.TargetTemperature = temperaturen;
+                    //update db
+                    context.Batches.Attach(target);
+                    context.Entry(target).Property(m => m.TargetTemperature).IsModified = true;
+
+                    //save changes
+                    context.SaveChanges();
                     return 1;
                 }
                 catch (Exception e)
@@ -90,14 +96,14 @@ namespace Dionysus.DBAccess
             }
         }
 
-        public async Task<double> getTemperatureTarget()
+        public async Task<double> getTemperatureTarget(int batchId)
         {
             using (var context = new DionysusContext())
             {
                 try
                 {
                     //add the db access for setting the targeted  value
-                    var tempTarget = await Task.Run(() => context.Batches.Select(t => t.TargetTemperature).FirstOrDefault());
+                    var tempTarget = await Task.Run(() => context.Batches.Where(p => p.BatchId == batchId).Select(t => t.TargetTemperature).FirstOrDefault());
                     return tempTarget;
                 }
                 catch (Exception e)
@@ -108,14 +114,20 @@ namespace Dionysus.DBAccess
             }
         }
 
-        public async Task<int> setHumidityTarget(double humidity)
+        public async Task<int> setHumidityTarget(double humidity, int batchId)
         {
             using (var context = new DionysusContext())
             {
                 try
                 {
-                    //add the db access for setting the targeted  value
-                    //await Task.Run(() => context.EnvironmentalReadings.Where(d => d.DateTime.Value.Date == date.Date).ToList());
+                    var target = await Task.Run(() => context.Batches.Where(p => p.BatchId == batchId).FirstOrDefault());
+                    target.TargetHumidity = humidity;
+                    //update db
+                    context.Batches.Attach(target);
+                    context.Entry(target).Property(m => m.TargetHumidity).IsModified = true;
+
+                    //save changes
+                    context.SaveChanges();
                     return 1;
                 }
                 catch (Exception e)
@@ -126,14 +138,14 @@ namespace Dionysus.DBAccess
             }
         }
 
-        public async Task<double> getHumidityTarget()
+        public async Task<double> getHumidityTarget(int batchId)
         {
             using (var context = new DionysusContext())
             {
                 try
                 {
                     //add the db access for setting the targeted  value
-                    var humTarget = await Task.Run(() => context.Batches.Select(h => h.TargetHumidity).FirstOrDefault());
+                    var humTarget = await Task.Run(() => context.Batches.Where(p => p.BatchId == batchId).Select(h => h.TargetHumidity).FirstOrDefault());
                     return humTarget;
                 }
                 catch (Exception e)
@@ -318,14 +330,18 @@ namespace Dionysus.DBAccess
             }
         }
 
-        public async Task<User> getUser(string username)
+        public async Task<User> getUser(string username, string password)
         {
             using (var context = new DionysusContext())
             {
                 try
                 {
                     var user = await Task.Run(() => context.Users.Find(username));
-                    return user;
+                    if (user is not null && user.Password.Equals(password))
+                    {
+                        return user;
+                    }
+                    return null;
                 }
                 catch (Exception e)
                 {
@@ -365,6 +381,30 @@ namespace Dionysus.DBAccess
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
+                }
+            }
+        }
+
+        public async Task<bool> doesUsernameExsist(string username)
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    var validUsername = await Task.Run(() => context.Users.Find(username));
+                    if(validUsername is null)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return false;
                 }
             }
         }

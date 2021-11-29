@@ -44,11 +44,12 @@ namespace Dionysus.Controllers
             }
         }
 
-        [HttpPost]
+        //make get target based on batch id
+        //check if the target is set, if yes then update
+        [HttpPut]
         [Route("setTemperatureTarget")]
         public async Task<ActionResult> setTemperatureTarget([FromHeader] double temperature)
         {
-
             try
             {
                 int result = await uIBusinessLogic.setTemperatureTarget(temperature);
@@ -68,7 +69,9 @@ namespace Dionysus.Controllers
             }
         }
 
-        [HttpPost]
+        //make get target based on batch id
+        //check if the target is set, if yes then update
+        [HttpPut]
         [Route("setHumidityTarget")]
         public async Task<ActionResult> setHumidityTarget([FromHeader] double humidity)
         {
@@ -92,7 +95,7 @@ namespace Dionysus.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("setManualControl")]
         public async Task<ActionResult> setManualControl([FromHeader] bool enableManualControl, [FromHeader] int pinNo)
         {
@@ -116,7 +119,7 @@ namespace Dionysus.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("setMachineState")]
         public async Task<ActionResult> setMachineState([FromHeader] bool machineState, [FromHeader] int pinNo)
         {
@@ -140,7 +143,7 @@ namespace Dionysus.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("getMachineStates")]
         public async Task<ActionResult> getMachineStates([FromHeader] int pin)
         {

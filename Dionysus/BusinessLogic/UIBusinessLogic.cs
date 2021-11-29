@@ -36,16 +36,16 @@ namespace Dionysus.BusinessLogic
             }
         }
 
-        public async Task<int> setHumidityTarget(double humidity)
+        public async Task<int> setHumidityTarget(double humidity, int batchId)
         {
-            int result = await environmentalReadingDBAccess.setHumidityTarget(humidity);
+            int result = await environmentalReadingDBAccess.setHumidityTarget(humidity, batchId);
             return result;
         }
 
-        public async Task<int> setTemperatureTarget(double temperature)
+        public async Task<int> setTemperatureTarget(double temperature, int batchId)
         {
 
-            int result = await environmentalReadingDBAccess.setTemperatureTarget(temperature);
+            int result = await environmentalReadingDBAccess.setTemperatureTarget(temperature, batchId);
             return result;
         }
 
@@ -93,8 +93,8 @@ namespace Dionysus.BusinessLogic
 
         public async Task<User> addUser(User user, string? validationCode)
         {
-            var usernameValid = environmentalReadingDBAccess.getUser(user.Username);
-            if(usernameValid is null)
+            var usernameValid = await environmentalReadingDBAccess.doesUsernameExsist(user.Username);
+            if(usernameValid == false)
             {
                 if(user.Role == UserEnums.Somelier.ToString())
                 {
@@ -116,6 +116,12 @@ namespace Dionysus.BusinessLogic
                 }
             }
             return null;
+        }
+
+        public async Task<User> getUser(string username, string password)
+        {
+            var result = await environmentalReadingDBAccess.getUser(username, password);
+            return result;
         }
     }
 }
