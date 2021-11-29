@@ -16,6 +16,13 @@ namespace Dionysus.Services
         {
             services.AddSingleton<IEnvironmentalReadingDBAccess, EnvironmentalReadingDBAccess>();
             services.AddSingleton<IBatchDBAccess, BatchDBAccess>();
+            
+            services.AddSingleton<IUserDBAccess, UserDBAccess>();
+            services.AddScoped<IUserBusinessLogic, UserBusinessLogic>();
+
+            services.AddSingleton<IElevationCodeDBAccess, ElevationCodeDBAccess>();
+            
+
             services.AddScoped<IRaspberryBusinessLogic, RaspberryBusinessLogic>();
             services.AddScoped<IUIBusinessLogic, UIBusinessLogic>();
             return services;

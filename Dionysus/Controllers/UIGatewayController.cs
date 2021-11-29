@@ -280,51 +280,51 @@ namespace Dionysus.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
+        ////To be removed since added to UserController
+        //[HttpPost]
+        //[Route("addUser")]
+        //public async Task<ActionResult> addUser(User user, [FromHeader] string? validationCode)
+        //{
+        //    try
+        //    {
+        //        var result = await uIBusinessLogic.addUser(user, validationCode);
+        //        if (result is not null)
+        //        {
+        //            return StatusCode(StatusCodes.Status200OK, result);
+        //        }
+        //        else
+        //        {
+        //            return StatusCode(StatusCodes.Status400BadRequest);
+        //        }
 
-        [HttpPost]
-        [Route("addUser")]
-        public async Task<ActionResult> addUser(User user, [FromHeader] string? validationCode)
-        {
-            try
-            {
-                var result = await uIBusinessLogic.addUser(user, validationCode);
-                if (result is not null)
-                {
-                    return StatusCode(StatusCodes.Status200OK, result);
-                }
-                else
-                {
-                    return StatusCode(StatusCodes.Status400BadRequest);
-                }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+        //    }
+        //}
+        ////To be removed since added to UserController
+        //[HttpGet]
+        //[Route("getUser")]
+        //public async Task<ActionResult> getUser([FromHeader] string username, [FromHeader] string password)
+        //{
+        //    try
+        //    {
+        //        var result = await uIBusinessLogic.getUser(username, password);
+        //        if (result is not null)
+        //        {
+        //            return StatusCode(StatusCodes.Status200OK, result);
+        //        }
+        //        else
+        //        {
+        //            return StatusCode(StatusCodes.Status400BadRequest);
+        //        }
 
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-            }
-        }
-
-        [HttpGet]
-        [Route("getUser")]
-        public async Task<ActionResult> getUser([FromHeader] string username, [FromHeader] string password)
-        {
-            try
-            {
-                var result = await uIBusinessLogic.getUser(username, password);
-                if (result is not null)
-                {
-                    return StatusCode(StatusCodes.Status200OK, result);
-                }
-                else
-                {
-                    return StatusCode(StatusCodes.Status400BadRequest);
-                }
-
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-            }
-        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+        //    }
+        //}
     }
 }

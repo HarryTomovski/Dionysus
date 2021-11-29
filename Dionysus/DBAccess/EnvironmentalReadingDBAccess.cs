@@ -311,99 +311,101 @@ namespace Dionysus.DBAccess
                 }
             }
         }
+        ////To be removed since moved to UserDBAccess
 
-        public async Task<User> addUser(User user)
-        {
-            using (var context = new DionysusContext())
-            {
-                try
-                {
-                    await Task.Run(() => context.Users.Add(user));
-                    context.SaveChanges();
-                    return user;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    return null;
-                }
-            }
-        }
+        //public async Task<User> addUser(User user)
+        //{
+        //    using (var context = new DionysusContext())
+        //    {
+        //        try
+        //        {
+        //            await Task.Run(() => context.Users.Add(user));
+        //            context.SaveChanges();
+        //            return user;
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            Console.WriteLine(e.Message);
+        //            return null;
+        //        }
+        //    }
+        //}
+        ////To be removed since moved to UserDBAccess
 
-        public async Task<User> getUser(string username)
-        {
-            using (var context = new DionysusContext())
-            {
-                try
-                {
-                    var user = await Task.Run(() => context.Users.Find(username));
-                    return user;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    return null;
-                }
-            }
-        }
-
-        public async Task<string> getValidationCode(string validationCode)
-        {
-            using (var context = new DionysusContext())
-            {
-                try
-                {
-                    var code = await Task.Run(() => context.ElevationCodes.Find(validationCode));
-                    return code.Code;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    return null;
-                }
-            }
-        }
-
-        public async Task removeValidationCode(string validationCode)
-        {
-            using (var context = new DionysusContext())
-            {
-                try
-                {
-                    var code = await Task.Run(() => context.ElevationCodes.Find(validationCode));
-                    await Task.Run(() => context.ElevationCodes.Remove(code));
-                    context.SaveChanges();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
-        }
-
-        public async Task<bool> doesUsernameExsist(string username)
-        {
-            using (var context = new DionysusContext())
-            {
-                try
-                {
-                    var validUsername = await Task.Run(() => context.Users.Find(username));
-                    if(validUsername is null)
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    return false;
-                }
-            }
-        }
+        //public async Task<User> getUser(string username)
+        //{
+        //    using (var context = new DionysusContext())
+        //    {
+        //        try
+        //        {
+        //            var user = await Task.Run(() => context.Users.Find(username));
+        //            return user;
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            Console.WriteLine(e.Message);
+        //            return null;
+        //        }
+        //    }
+        //}
+        ////To be removed since moved to IElevationCodeDBAccess
+        //public async Task<string> getValidationCode(string validationCode)
+        //{
+        //    using (var context = new DionysusContext())
+        //    {
+        //        try
+        //        {
+        //            var code = await Task.Run(() => context.ElevationCodes.Find(validationCode));
+        //            return code.Code;
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            Console.WriteLine(e.Message);
+        //            return null;
+        //        }
+        //    }
+        //}
+        ////To be removed since moved to IElevationCodeDBAccess
+        //public async Task removeValidationCode(string validationCode)
+        //{
+        //    using (var context = new DionysusContext())
+        //    {
+        //        try
+        //        {
+        //            var code = await Task.Run(() => context.ElevationCodes.Find(validationCode));
+        //            await Task.Run(() => context.ElevationCodes.Remove(code));
+        //            context.SaveChanges();
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            Console.WriteLine(e.Message);
+        //        }
+        //    }
+        //}
+        ////To be removed since moved to UserDBAccess && renamed to userExists
+        //public async Task<bool> doesUsernameExsist(string username)
+        //{
+        //    using (var context = new DionysusContext())
+        //    {
+        //        try
+        //        {
+        //            var validUsername = await Task.Run(() => context.Users.Find(username));
+        //            if(validUsername is null)
+        //            {
+        //                return false;
+        //            }
+        //            else
+        //            {
+        //                return true;
+        //            }
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            Console.WriteLine(e.Message);
+        //            return false;
+        //        }
+        //    }
+        //}
 
         public async Task<List<EnvironmentalReading>> getReadingsSinceBeginning(DateTime date, int batchId, DateTime storedOn)
         {
