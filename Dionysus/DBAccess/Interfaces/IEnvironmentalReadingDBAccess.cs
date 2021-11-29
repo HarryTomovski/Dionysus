@@ -13,6 +13,7 @@ namespace Dionysus.DBAccess.Interfaces
 
         Task<List<EnvironmentalReading>> getEnvironmentalValuesForPastMinute();
         Task<List<EnvironmentalReading>> getReadingsForDate(DateTime date);
+        Task<List<EnvironmentalReading>> getReadingsSinceBeginning(DateTime date, int batchId, DateTime storedOn);
 
         Task<int> setTemperatureTarget(double temperature, int batchId);
         Task<double> getTemperatureTarget(int batchId);

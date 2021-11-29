@@ -1,4 +1,5 @@
 ﻿
+
 using Dionysus.BusinessLogic.Interfaces;
 using Dionysus.DBModels;
 using Dionysus.DTO_s;
@@ -48,11 +49,11 @@ namespace Dionysus.Controllers
         //check if the target is set, if yes then update
         [HttpPut]
         [Route("setTemperatureTarget")]
-        public async Task<ActionResult> setTemperatureTarget([FromHeader] double temperature)
+        public async Task<ActionResult> setTemperatureTarget([FromHeader] double temperature, int batchId)
         {
             try
             {
-                int result = await uIBusinessLogic.setTemperatureTarget(temperature);
+                int result = await uIBusinessLogic.setTemperatureTarget(temperature,batchId);
                 if (result == 1)
                 {
                     return StatusCode(StatusCodes.Status200OK, temperature);
@@ -73,12 +74,12 @@ namespace Dionysus.Controllers
         //check if the target is set, if yes then update
         [HttpPut]
         [Route("setHumidityTarget")]
-        public async Task<ActionResult> setHumidityTarget([FromHeader] double humidity)
+        public async Task<ActionResult> setHumidityTarget([FromHeader] double humidity, [FromHeader] int batchId)
         {
 
             try
             {
-                int result = await uIBusinessLogic.setHumidityTarget(humidity);
+                int result = await uIBusinessLogic.setHumidityTarget(humidity,batchId);
                 if (result == 1)
                 {
                     return StatusCode(StatusCodes.Status200OK, humidity);

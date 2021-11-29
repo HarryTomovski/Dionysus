@@ -12,7 +12,7 @@ namespace Dionysus.BusinessLogic
     {
         Task<bool> storeReading(EnvironmentalReading reading);
 
-        Task<Command> getCommand(int temperaturePin, int humidityPin);
+        Task<Command> getCommand(int temperaturePin, int humidityPin, int batchId);
 
     }
 }

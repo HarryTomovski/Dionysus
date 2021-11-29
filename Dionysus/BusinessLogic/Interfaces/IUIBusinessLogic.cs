@@ -1,4 +1,5 @@
-﻿using Dionysus.DBModels;
+﻿
+using Dionysus.DBModels;
 using Dionysus.DTO_s;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace Dionysus.BusinessLogic.Interfaces
    public interface IUIBusinessLogic
     {
         Task<AvarageDataReadingDTO> getAvarageReadingForDate(DateTime date);
+        Task<AvarageDataReadingDTO> getAvarageReadingSinceBeginning(DateTime date,int batchId);
         Task<int> setTemperatureTarget(double temperature, int batchId);
         Task<int> setHumidityTarget(double humidity, int batchId);
         Task<int> setManualControl(bool enableManualControl, int devicePin);

@@ -26,13 +26,13 @@ namespace Dionysus.BusinessLogic
             return success;   
         }
 
-        public async Task<Command> getCommand(int temperaturePin, int humidityPin)
+        public async Task<Command> getCommand(int temperaturePin, int humidityPin, int batchId)
         {
             var manualControlTemp = await environmentalReadingDBAccess.getManualControl(temperaturePin);
             var manualControlHum = await environmentalReadingDBAccess.getManualControl(humidityPin);
 
-            double targetedTemp = await environmentalReadingDBAccess.getTemperatureTarget();
-            double targetedHum = await environmentalReadingDBAccess.getHumidityTarget();
+            double targetedTemp = await environmentalReadingDBAccess.getTemperatureTarget(batchId);
+            double targetedHum = await environmentalReadingDBAccess.getHumidityTarget(batchId);
 
             //temperature values for the past minute
             var environmentalValues = await environmentalReadingDBAccess.getEnvironmentalValuesForPastMinute();

@@ -13,10 +13,12 @@ namespace Dionysus.BusinessLogic
     public class UIBusinessLogic : IUIBusinessLogic
     {
         private IEnvironmentalReadingDBAccess environmentalReadingDBAccess;
+        private IBatchDBAccess batchDBAccess;
 
-        public UIBusinessLogic(IEnvironmentalReadingDBAccess environmentalReadingDBAccess)
+        public UIBusinessLogic(IEnvironmentalReadingDBAccess environmentalReadingDBAccess, IBatchDBAccess batchDBAccess)
         {
             this.environmentalReadingDBAccess = environmentalReadingDBAccess;
+            this.batchDBAccess = batchDBAccess;
         }
         public async Task<AvarageDataReadingDTO> getAvarageReadingForDate(DateTime date)
         {
@@ -122,6 +124,36 @@ namespace Dionysus.BusinessLogic
         {
             var result = await environmentalReadingDBAccess.getUser(username, password);
             return result;
+        }
+
+        public async Task<AvarageDataReadingDTO> getAvarageReadingSinceBeginning(DateTime date, int batchId)
+        {
+            var exists = await  batchDBAccess.batchExists(batchId);
+            if (exists)
+            {
+                var storedOn = await batchDBAccess.getStoredOn(batchId);
+                if (storedOn.HasValue)
+                {
+                    var storedOnValue = storedOn.Value;
+                    var readingsList = await environmentalReadingDBAccess.getReadingsSinceBeginning(date, batchId, storedOnValue);
+
+
+                    double? avarageTemperature = readingsList.Select(t => t.TemperatureReading).Average();
+                    double? avarageHumidity = readingsList.Select(h => h.HumidityReading).Average();
+
+                    var dto = new AvarageDataReadingDTO(avarageHumidity, avarageTemperature, date.Date);
+                    return dto;
+
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

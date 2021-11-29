@@ -51,12 +51,12 @@ namespace Dionysus.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> getCommand([FromHeader] int temperaturePin, [FromHeader] int humidityPin)
+        public async Task<ActionResult> getCommand([FromHeader] int temperaturePin, [FromHeader] int humidityPin, [FromHeader] int batchId)
         {
             try
             {
                 //get command based of average from last 1 minute
-                var command = await environmentalreadingBusinessLogic.getCommand(temperaturePin, humidityPin);
+                var command = await environmentalreadingBusinessLogic.getCommand(temperaturePin, humidityPin, batchId);
                 if (command is not null)
                 {
                     return StatusCode(StatusCodes.Status200OK, command);
