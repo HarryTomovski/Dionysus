@@ -26,6 +26,8 @@ namespace Dionysus.BusinessLogic
             return success;   
         }
 
+        //maybe make the targeted value a range of +/- few percentages
+        //have a lower and upper limit 
         public async Task<Command> getCommand(int temperaturePin, int humidityPin, int batchId)
         {
             var manualControlTemp = await environmentalReadingDBAccess.getManualControl(temperaturePin);
