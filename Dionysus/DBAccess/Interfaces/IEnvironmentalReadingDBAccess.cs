@@ -28,7 +28,7 @@ namespace Dionysus.DBAccess.Interfaces
         Task<int> addSensor(Sensor sensor);
         Task<int> addRating(Rating rating);
         Task<User> addUser(User user);
-        Task<User> getUser(string username, string password);
+        Task<User> getUser(string username);
         Task<bool> doesUsernameExsist(string username);
         Task<string> getValidationCode(string validationCode);
         Task removeValidationCode(string validationCode);

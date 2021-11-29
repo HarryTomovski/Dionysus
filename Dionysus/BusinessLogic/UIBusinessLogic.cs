@@ -122,8 +122,12 @@ namespace Dionysus.BusinessLogic
 
         public async Task<User> getUser(string username, string password)
         {
-            var result = await environmentalReadingDBAccess.getUser(username, password);
-            return result;
+            var user = await environmentalReadingDBAccess.getUser(username);
+            if (user is not null && user.Password.Equals(password))
+            {
+                return user;
+            }
+            return null;
         }
 
         public async Task<AvarageDataReadingDTO> getAvarageReadingSinceBeginning(DateTime date, int batchId)
@@ -131,19 +135,19 @@ namespace Dionysus.BusinessLogic
             var exists = await  batchDBAccess.batchExists(batchId);
             if (exists)
             {
+                //if the batch exsists there is going to be a value
                 var storedOn = await batchDBAccess.getStoredOn(batchId);
                 if (storedOn.HasValue)
                 {
+                    //dont need to pass the stored on date because we can get in from the batch id
                     var storedOnValue = storedOn.Value;
                     var readingsList = await environmentalReadingDBAccess.getReadingsSinceBeginning(date, batchId, storedOnValue);
-
 
                     double? avarageTemperature = readingsList.Select(t => t.TemperatureReading).Average();
                     double? avarageHumidity = readingsList.Select(h => h.HumidityReading).Average();
 
                     var dto = new AvarageDataReadingDTO(avarageHumidity, avarageTemperature, date.Date);
                     return dto;
-
                 }
                 else
                 {

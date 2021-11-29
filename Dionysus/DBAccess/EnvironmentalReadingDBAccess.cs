@@ -330,18 +330,14 @@ namespace Dionysus.DBAccess
             }
         }
 
-        public async Task<User> getUser(string username, string password)
+        public async Task<User> getUser(string username)
         {
             using (var context = new DionysusContext())
             {
                 try
                 {
                     var user = await Task.Run(() => context.Users.Find(username));
-                    if (user is not null && user.Password.Equals(password))
-                    {
-                        return user;
-                    }
-                    return null;
+                    return user;
                 }
                 catch (Exception e)
                 {
