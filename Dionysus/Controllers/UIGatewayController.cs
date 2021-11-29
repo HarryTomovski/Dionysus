@@ -45,8 +45,8 @@ namespace Dionysus.Controllers
             }
         }
         [HttpGet]
-        [Route("getOverallAvarage/{date}/{batchId}")]
-        public async Task<ActionResult<AvarageDataReadingDTO>> getReadingsSinceBeginning(DateTime date,int batchId)
+        [Route("getOverallAvarage")]
+        public async Task<ActionResult<AvarageDataReadingDTO>> getReadingsSinceBeginning([FromHeader] DateTime date,[FromHeader]int batchId)
         {
             try
             {
