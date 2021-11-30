@@ -2,6 +2,7 @@
 using Dionysus.BusinessLogic.Interfaces;
 using Dionysus.DBAccess;
 using Dionysus.DBAccess.Interfaces;
+using Dionysus.JWT;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -16,17 +17,13 @@ namespace Dionysus.Services
         {
             services.AddSingleton<IEnvironmentalReadingDBAccess, EnvironmentalReadingDBAccess>();
             services.AddSingleton<IBatchDBAccess, BatchDBAccess>();
-            
-            services.AddSingleton<IUserDBAccess, UserDBAccess>();
+            services.AddSingleton<IJWTGeneration, JWTGeneration>();
             services.AddScoped<IUserBusinessLogic, UserBusinessLogic>();
-
-            services.AddSingleton<IElevationCodeDBAccess, ElevationCodeDBAccess>();
-            
-
+            services.AddScoped<IUserDBAccess, UserDBAccess>();
+            //services.AddSingleton<IElevationCodeDBAccess, ElevationCodeDBAccess>();
             services.AddScoped<IRaspberryBusinessLogic, RaspberryBusinessLogic>();
             services.AddScoped<IUIBusinessLogic, UIBusinessLogic>();
-            services.AddTransient<IUserAccess, UserAccess>();
-            services.AddTransient<IUserBusinessLogic, UserBusinessLogic>();
+         
 
             return services;
         }

@@ -15,65 +15,56 @@ namespace Dionysus.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserAccess userAccess;
-        private IUserBusinessLogic userBusinessLogic;
+        private readonly IUserBusinessLogic userBusinessLogic;
 
-        public UserController(IUserAccess userAccess)
         public UserController(IUserBusinessLogic userBusinessLogic)
         {
-            this.userAccess = userAccess;
             this.userBusinessLogic = userBusinessLogic;
         }
-        [HttpPost]
-        [Route("addUser")]
-        public async Task<ActionResult> addUser(User user, [FromHeader] string? validationCode)
-        {
-            try
-            {
-                var result = await userBusinessLogic.addUser(user, validationCode);
-                if (result is not null)
-                {
-                    return StatusCode(StatusCodes.Status200OK, result);
-                }
-                else
-                {
-                    return StatusCode(StatusCodes.Status400BadRequest);
-                }
-
+        
         [HttpPost(nameof(Register))]
         public async Task<ActionResult<string>> Register(UserRegisterModel model)
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-            }
-        }
-        [HttpGet]
-        [Route("getUser")]
-        public async Task<ActionResult> getUser([FromHeader] string username, [FromHeader] string password)
         {
             try
             {
-                var result = await userBusinessLogic.getUser(username, password);
-                if (result is not null)
+                var token = await userBusinessLogic.RegisterUser(model);
+                if (String.IsNullOrEmpty(token) == false)
                 {
-                    return StatusCode(StatusCodes.Status200OK, result);
+                    return StatusCode(StatusCodes.Status200OK, token);
                 }
                 else
-        {
-            return await userAccess.RegisterAsync(model);
+                {
                     return StatusCode(StatusCodes.Status400BadRequest);
-        }
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
 
+        }
+            
+            
         [HttpPost(nameof(Login))]
         public async Task<ActionResult<string>> Login(UserLoginModel model)
-            }
-            catch (Exception e)
         {
-            return await userAccess.LoginAsync(model);
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+
+            try
+            {
+                var token = await userBusinessLogic.LoginUser(model);
+                if (String.IsNullOrEmpty(token) == false)
+                {
+                    return StatusCode(StatusCodes.Status200OK, token);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest);
+                }
             }
-        }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using Dionysus.DBModels;
+using Dionysus.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ namespace Dionysus.BusinessLogic.Interfaces
 {
     public interface IUserBusinessLogic
     {
-        string GenerateJwtAsync(User user);
-        Task<User> addUser(User user, string? validationCode);
-        Task<User> getUser(string username, string password);
+        
+        Task<string> RegisterUser(UserRegisterModel model);
+        Task<string> LoginUser(UserLoginModel model);
         
     }
 }
