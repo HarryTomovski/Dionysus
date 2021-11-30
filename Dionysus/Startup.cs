@@ -1,4 +1,6 @@
+using Dionysus.Models;
 using Dionysus.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,10 +9,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Dionysus
@@ -33,6 +37,38 @@ namespace Dionysus
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Dionysus", Version = "v1" });
             });
+
+            services
+                .Configure<ApplicationSettings>(
+                    this.Configuration.GetSection(nameof(ApplicationSettings)),
+                    options => options.BindNonPublicProperties = true);
+
+            var secret = this.Configuration
+                .GetSection(nameof(ApplicationSettings))
+                .GetValue<string>(nameof(ApplicationSettings.Secret));
+
+            var key = Encoding.ASCII.GetBytes(secret);
+
+            services
+                .AddAuthentication(authentication =>
+                {
+                    authentication.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    authentication.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(bearer =>
+                {
+                    bearer.RequireHttpsMetadata = false;
+                    bearer.SaveToken = true;
+                    bearer.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +85,7 @@ namespace Dionysus
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

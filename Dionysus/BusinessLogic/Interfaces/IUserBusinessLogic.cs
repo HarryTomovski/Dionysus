@@ -8,6 +8,7 @@ namespace Dionysus.BusinessLogic.Interfaces
 {
     public interface IUserBusinessLogic
     {
+        string GenerateJwtAsync(User user);
         Task<User> addUser(User user, string? validationCode);
         Task<User> getUser(string username, string password);
         

@@ -25,6 +25,9 @@ namespace Dionysus.Services
 
             services.AddScoped<IRaspberryBusinessLogic, RaspberryBusinessLogic>();
             services.AddScoped<IUIBusinessLogic, UIBusinessLogic>();
+            services.AddTransient<IUserAccess, UserAccess>();
+            services.AddTransient<IUserBusinessLogic, UserBusinessLogic>();
+
             return services;
         }
 
