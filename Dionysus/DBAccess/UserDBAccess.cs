@@ -85,7 +85,7 @@ namespace Dionysus.DBAccess
             {
                 try
                 {
-                    var validUsername = await Task.Run(() => context.Users.Find(username));
+                    var validUsername = await context.Users.FindAsync(username);
                     if (validUsername is null)
                     {
                         return false;

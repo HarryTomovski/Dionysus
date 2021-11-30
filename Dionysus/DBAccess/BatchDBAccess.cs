@@ -15,7 +15,8 @@ namespace Dionysus.DBAccess
             {
                 try
                 {
-                    var exists = await Task.Run(() => context.Batches.Any(b=>b.BatchId==batchId));
+                    //var exists = await context.Batches.AnyAsync(b => b.BatchId == batchId);
+                    //var exists = await context.Batches.
                     return exists;
                 }
                 catch (Exception e )
