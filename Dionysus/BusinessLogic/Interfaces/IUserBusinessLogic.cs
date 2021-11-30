@@ -12,6 +12,6 @@ namespace Dionysus.BusinessLogic.Interfaces
         
         Task<string> RegisterUser(UserRegisterModel model);
         Task<string> LoginUser(UserLoginModel model);
-        
+        Task<bool> ChangeUserRole(string username, string role);
     }
 }

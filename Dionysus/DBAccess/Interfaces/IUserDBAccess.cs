@@ -11,6 +11,7 @@ namespace Dionysus.DBAccess.Interfaces
     {
         Task<string> RegisterAsync(UserRegisterModel model);
         Task<string> LoginAsync(UserLoginModel model);
+        Task<bool> ChangeUserRole(string username, string role);
         Task<bool> userExsist(string username);
         
     }

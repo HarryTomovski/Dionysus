@@ -35,6 +35,12 @@ namespace Dionysus.BusinessLogic
             var token = userDBAccess.LoginAsync(model);
             return token;
         }
+
+        public Task<bool> ChangeUserRole(string username, string role)
+        {
+            var success = userDBAccess.ChangeUserRole(username, role);
+            return success;
+        }
     }
 
         

@@ -61,7 +61,7 @@ namespace Dionysus.DBAccess
                         Name = model.Name,
                         Username = model.Username,
                         Password = model.Password,
-                        Role = "Administrator"
+                        Role = "Dilettante"
                     };
 
                     await context.Users.AddAsync(user);
@@ -75,6 +75,34 @@ namespace Dionysus.DBAccess
                 {
                     Console.WriteLine(e.Message);
                     return string.Empty;
+                }
+            }
+        }
+
+        public async Task<bool> ChangeUserRole(string username, string role)
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    var user = await context.Users.FirstOrDefaultAsync(u => u.Username == username);
+                    if (user != null)
+                    {
+                        user.Role = role;
+                        //update db
+                        context.Users.Attach(user);
+                        context.Entry(user).Property(u => u.Role).IsModified = true;
+
+                        //save changes
+                        await context.SaveChangesAsync();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return false;
                 }
             }
         }
