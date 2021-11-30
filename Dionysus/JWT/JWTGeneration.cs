@@ -31,10 +31,21 @@ namespace Dionysus.JWT
 
             //we are gonna check every role, for now we only have if its admin
             var isAdministrator = user.Role.Contains("Administrator");
+            var isWinemaker = user.Role.Contains("Winemaker");
+            var isSommelier = user.Role.Contains("Sommelier");
             if (isAdministrator)
             {
                 claims.Add(new Claim(ClaimTypes.Role, "Administrator"));
             }
+            if (isWinemaker)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, "Winemaker"));
+            }
+            if (isSommelier)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, "Sommelier"));
+            }
+
 
             var secret = Encoding.UTF8.GetBytes(this.applicationSettings.Secret);
 
