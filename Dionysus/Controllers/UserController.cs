@@ -48,7 +48,6 @@ namespace Dionysus.Controllers
         [HttpPost(nameof(Login))]
         public async Task<ActionResult<string>> Login(UserLoginModel model)
         {
-
             try
             {
                 var token = await userBusinessLogic.LoginUser(model);

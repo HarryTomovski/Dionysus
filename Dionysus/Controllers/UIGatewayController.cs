@@ -3,6 +3,7 @@
 using Dionysus.BusinessLogic.Interfaces;
 using Dionysus.DBModels;
 using Dionysus.DTO_s;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -78,6 +79,7 @@ namespace Dionysus.Controllers
         //check if the target is set, if yes then update
         [HttpPut]
         [Route("setTemperatureTarget")]
+        [Authorize(Roles = "Administrator, Winemaker")]
         public async Task<ActionResult> setTemperatureTarget([FromHeader] double temperature, [FromHeader] int batchId)
         {
             try
@@ -103,6 +105,7 @@ namespace Dionysus.Controllers
         //check if the target is set, if yes then update
         [HttpPut]
         [Route("setHumidityTarget")]
+        [Authorize(Roles = "Administrator, Winemaker")]
         public async Task<ActionResult> setHumidityTarget([FromHeader] double humidity, [FromHeader] int batchId)
         {
 
@@ -127,6 +130,7 @@ namespace Dionysus.Controllers
 
         [HttpPut]
         [Route("setManualControl")]
+        [Authorize(Roles = "Administrator, Winemaker")]
         public async Task<ActionResult> setManualControl([FromHeader] bool enableManualControl, [FromHeader] int pinNo, [FromHeader] int batchId)
         {
 
@@ -151,6 +155,7 @@ namespace Dionysus.Controllers
 
         [HttpPut]
         [Route("setMachineState")]
+        [Authorize(Roles = "Administrator, Winemaker")]
         public async Task<ActionResult> setMachineState([FromHeader] bool machineState, [FromHeader] int pinNo, [FromHeader] int batchId)
         {
 
@@ -191,6 +196,7 @@ namespace Dionysus.Controllers
 
         [HttpPost]
         [Route("addBatch")]
+        [Authorize(Roles = "Administrator, Winemaker")]
         public async Task<ActionResult> addBatch(Batch batch)
         {
             try
@@ -214,6 +220,7 @@ namespace Dionysus.Controllers
 
         [HttpPost]
         [Route("addController")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> addController(EnvironmentalController controller, [FromHeader] int batchId)
         {
             try
@@ -237,6 +244,7 @@ namespace Dionysus.Controllers
 
         [HttpPost]
         [Route("addSensor")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> addSensor(Sensor sensor, [FromHeader] int batchId)
         {
             try
@@ -260,6 +268,7 @@ namespace Dionysus.Controllers
 
         [HttpPost]
         [Route("addRating")]
+        [Authorize(Roles = "Administrator, Winemaker, Sommelier")]
         public async Task<ActionResult> addRating(Rating rating)
         {
             try
@@ -280,51 +289,5 @@ namespace Dionysus.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
-        ////To be removed since added to UserController
-        //[HttpPost]
-        //[Route("addUser")]
-        //public async Task<ActionResult> addUser(User user, [FromHeader] string? validationCode)
-        //{
-        //    try
-        //    {
-        //        var result = await uIBusinessLogic.addUser(user, validationCode);
-        //        if (result is not null)
-        //        {
-        //            return StatusCode(StatusCodes.Status200OK, result);
-        //        }
-        //        else
-        //        {
-        //            return StatusCode(StatusCodes.Status400BadRequest);
-        //        }
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-        //    }
-        //}
-        ////To be removed since added to UserController
-        //[HttpGet]
-        //[Route("getUser")]
-        //public async Task<ActionResult> getUser([FromHeader] string username, [FromHeader] string password)
-        //{
-        //    try
-        //    {
-        //        var result = await uIBusinessLogic.getUser(username, password);
-        //        if (result is not null)
-        //        {
-        //            return StatusCode(StatusCodes.Status200OK, result);
-        //        }
-        //        else
-        //        {
-        //            return StatusCode(StatusCodes.Status400BadRequest);
-        //        }
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-        //    }
-        //}
     }
 }

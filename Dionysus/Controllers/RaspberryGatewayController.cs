@@ -13,8 +13,6 @@ namespace Dionysus.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
-
     public class RaspberryGatewayController : ControllerBase
     {
         private readonly ILogger<RaspberryGatewayController> _logger;
