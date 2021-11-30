@@ -86,18 +86,13 @@ namespace Dionysus.DBAccess
                 try
                 {
                     var user = await context.Users.FirstOrDefaultAsync(u => u.Username == username);
-                    if (user != null)
-                    {
-                        user.Role = role;
-                        //update db
-                        context.Users.Attach(user);
-                        context.Entry(user).Property(u => u.Role).IsModified = true;
-
-                        //save changes
-                        await context.SaveChangesAsync();
-                        return true;
-                    }
-                    return false;
+                    user.Role = role;
+                    //update db
+                    context.Users.Attach(user);
+                    context.Entry(user).Property(u => u.Role).IsModified = true;
+                    //save changes
+                    await context.SaveChangesAsync();
+                    return true;
                 }
                 catch (Exception e)
                 {
@@ -114,14 +109,7 @@ namespace Dionysus.DBAccess
                 try
                 {
                     var validUsername = await context.Users.FindAsync(username);
-                    if (validUsername is null)
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
+                    return validUsername is not null; 
                 }
                 catch (Exception e)
                 {
