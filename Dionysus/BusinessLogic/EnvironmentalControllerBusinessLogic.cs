@@ -1,4 +1,5 @@
 ﻿using Dionysus.BusinessLogic.Interfaces;
+using Dionysus.DBAccess.Interfaces;
 using Dionysus.DBModels;
 using System;
 using System.Collections.Generic;
@@ -9,8 +10,8 @@ namespace Dionysus.BusinessLogic
 {
     public class EnvironmentalControllerBusinessLogic : IEnvironmentalControllerBusinessLogic
     {
-        private IEnvironmentalControllerBusinessLogic environmentalController;
-        public EnvironmentalControllerBusinessLogic(IEnvironmentalControllerBusinessLogic environmentalController)
+        private readonly IEnvironmentalControllerDBAccess environmentalController;
+        public EnvironmentalControllerBusinessLogic(IEnvironmentalControllerDBAccess environmentalController)
         {
             this.environmentalController = environmentalController;          
         }

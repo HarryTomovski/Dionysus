@@ -11,11 +11,15 @@ namespace Dionysus.BusinessLogic
 {
     public class RaspberryBusinessLogic : IRaspberryBusinessLogic
     {
-        private IEnvironmentalReadingDBAccess environmentalReadingDBAccess;
+        private readonly IEnvironmentalReadingDBAccess environmentalReadingDBAccess;
+        private readonly IEnvironmentalControllerDBAccess environmentalControllerDBAccess;
+        private readonly IBatchDBAccess batchDBAccess;
 
-        public RaspberryBusinessLogic(IEnvironmentalReadingDBAccess environmentalReadingDBAccess)
+        public RaspberryBusinessLogic(IEnvironmentalReadingDBAccess environmentalReadingDBAccess, IEnvironmentalControllerDBAccess environmentalControllerDBAccess, IBatchDBAccess batchDBAccess)
         {
             this.environmentalReadingDBAccess = environmentalReadingDBAccess;
+            this.environmentalControllerDBAccess = environmentalControllerDBAccess;
+            this.batchDBAccess = batchDBAccess;
         }
 
 
@@ -30,11 +34,11 @@ namespace Dionysus.BusinessLogic
         //have a lower and upper limit 
         public async Task<Command> getCommand(int temperaturePin, int humidityPin, int batchId)
         {
-            var manualControlTemp = await environmentalReadingDBAccess.getManualControl(temperaturePin, batchId);
-            var manualControlHum = await environmentalReadingDBAccess.getManualControl(humidityPin, batchId);
+            var manualControlTemp = await environmentalControllerDBAccess.getManualControl(temperaturePin, batchId);
+            var manualControlHum = await environmentalControllerDBAccess.getManualControl(humidityPin, batchId);
 
-            double targetedTemp = await environmentalReadingDBAccess.getTemperatureTarget(batchId);
-            double targetedHum = await environmentalReadingDBAccess.getHumidityTarget(batchId);
+            double targetedTemp = await batchDBAccess.getTemperatureTarget(batchId);
+            double targetedHum = await batchDBAccess.getHumidityTarget(batchId);
 
             //temperature values for the past minute
             var environmentalValues = await environmentalReadingDBAccess.getEnvironmentalValuesForPastMinute();
@@ -52,7 +56,7 @@ namespace Dionysus.BusinessLogic
             }
             else
             {
-                command.ActivateTemperatureDevice = await environmentalReadingDBAccess.getMachineState(temperaturePin, batchId);
+                command.ActivateTemperatureDevice = await environmentalControllerDBAccess.getMachineState(temperaturePin, batchId);
             }
             if (manualControlHum == false)
             {
@@ -62,7 +66,7 @@ namespace Dionysus.BusinessLogic
             }
             else
             {
-                command.ActivateHumidityDevice = await environmentalReadingDBAccess.getMachineState(humidityPin, batchId);
+                command.ActivateHumidityDevice = await environmentalControllerDBAccess.getMachineState(humidityPin, batchId);
             }
 
             return command;

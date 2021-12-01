@@ -12,8 +12,8 @@ namespace Dionysus.BusinessLogic
 {
     public class UIBusinessLogic : IUIBusinessLogic
     {
-        private IEnvironmentalReadingDBAccess environmentalReadingDBAccess;
-        private IBatchDBAccess batchDBAccess;
+        private readonly IEnvironmentalReadingDBAccess environmentalReadingDBAccess;
+        private readonly IBatchDBAccess batchDBAccess;
         
 
         public UIBusinessLogic(IEnvironmentalReadingDBAccess environmentalReadingDBAccess, IBatchDBAccess batchDBAccess)
