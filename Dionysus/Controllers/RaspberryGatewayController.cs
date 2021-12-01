@@ -24,6 +24,7 @@ namespace Dionysus.Controllers
             _logger = logger;
         }
 
+        //add batch id here and in the embedded layer
         [HttpPost]
         public async Task<ActionResult> storeReading(EnvironmentalReading reading)
         {
