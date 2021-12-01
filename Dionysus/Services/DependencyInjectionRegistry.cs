@@ -34,7 +34,9 @@ namespace Dionysus.Services
             //services.AddSingleton<IElevationCodeDBAccess, ElevationCodeDBAccess>();
             services.AddScoped<IRaspberryBusinessLogic, RaspberryBusinessLogic>();
             services.AddScoped<IUIBusinessLogic, UIBusinessLogic>();
-         
+
+            services.AddSingleton<ISensorDBAccess, SensorDBAccess>();
+            services.AddScoped<ISensorBusinessLogic, SensorBusinessLogic>();
 
             return services;
         }
