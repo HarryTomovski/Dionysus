@@ -10,7 +10,7 @@ namespace Dionysus.BusinessLogic
 {
     public class RatingBusinessLogic : IRatingBusinessLogic
     {
-        private IRatingDBAccess ratingDBAccess;
+        private readonly IRatingDBAccess ratingDBAccess;
         public RatingBusinessLogic(IRatingDBAccess ratingDBAccess)
         {
             this.ratingDBAccess = ratingDBAccess;

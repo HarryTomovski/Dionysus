@@ -9,7 +9,7 @@ namespace Dionysus.BusinessLogic
 {
     public class SensorBusinessLogic : ISensorBusinessLogic
     {
-        private ISensorBusinessLogic sensorBusinessLogic;
+        private readonly ISensorBusinessLogic sensorBusinessLogic;
         public SensorBusinessLogic(ISensorBusinessLogic sensorBusinessLogic)
         {
             this.sensorBusinessLogic = sensorBusinessLogic;

@@ -10,7 +10,7 @@ namespace Dionysus.BusinessLogic
 {
     public class BatchBusniessLogic : IBatchBusnessLogic
     {
-        private IBatchDBAccess batchDBAccess;
+        private readonly IBatchDBAccess batchDBAccess;
 
         public BatchBusniessLogic(IBatchDBAccess batchDBAccess)
         {
