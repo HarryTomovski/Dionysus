@@ -1,4 +1,5 @@
 ﻿using Dionysus.BusinessLogic.Interfaces;
+using Dionysus.DBAccess.Interfaces;
 using Dionysus.DBModels;
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,14 @@ namespace Dionysus.BusinessLogic
 {
     public class SensorBusinessLogic : ISensorBusinessLogic
     {
-        private readonly ISensorBusinessLogic sensorBusinessLogic;
-        public SensorBusinessLogic(ISensorBusinessLogic sensorBusinessLogic)
+        private readonly ISensorDBAccess sensorDBAccess;
+        public SensorBusinessLogic(ISensorDBAccess sensorDBAccess)
         {
-            this.sensorBusinessLogic = sensorBusinessLogic;
+            this.sensorDBAccess = sensorDBAccess;
         }
         public async Task<int> addSensor(Sensor sensor)
         {
-            var result = await sensorBusinessLogic.addSensor(sensor);
+            var result = await sensorDBAccess.addSensor(sensor);
             return result;
         }
     }

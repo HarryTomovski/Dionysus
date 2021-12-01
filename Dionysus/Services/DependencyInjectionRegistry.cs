@@ -16,7 +16,8 @@ namespace Dionysus.Services
         public static IServiceCollection AddMyServices(this IServiceCollection services)
         {
             services.AddSingleton<IEnvironmentalReadingDBAccess, EnvironmentalReadingDBAccess>();
-            
+            services.AddScoped<IUIBusinessLogic, UIBusinessLogic>();
+
             services.AddSingleton<IBatchDBAccess, BatchDBAccess>();
             services.AddScoped<IBatchBusnessLogic, BatchBusniessLogic>();
 
@@ -33,7 +34,7 @@ namespace Dionysus.Services
             
             //services.AddSingleton<IElevationCodeDBAccess, ElevationCodeDBAccess>();
             services.AddScoped<IRaspberryBusinessLogic, RaspberryBusinessLogic>();
-            services.AddScoped<IUIBusinessLogic, UIBusinessLogic>();
+            
 
             services.AddSingleton<ISensorDBAccess, SensorDBAccess>();
             services.AddScoped<ISensorBusinessLogic, SensorBusinessLogic>();
