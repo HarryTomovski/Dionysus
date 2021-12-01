@@ -11,7 +11,7 @@ namespace Dionysus.BusinessLogic.Interfaces
    public interface IUIBusinessLogic
     {
         Task<AvarageDataReadingDTO> getAvarageReadingForDate(DateTime date);
-        Task<AvarageDataReadingDTO> getAvarageReadingSinceBeginning(DateTime date,int batchId);
+        Task<AvarageDataReadingDTO> getAvarageReadingSinceBeginning(int batchId);
 
         
         

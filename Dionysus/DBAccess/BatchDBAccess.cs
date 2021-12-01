@@ -146,5 +146,24 @@ namespace Dionysus.DBAccess
                 }
             }
         }
+
+        public async Task<DateTime?> getFinishedOn(int batchId)
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    var finishedStorage = await Task.Run(() => context.Batches.Where(b => b.BatchId == batchId).Select(s => s.FinishedStorage).FirstOrDefault());
+                    return finishedStorage;
+                }
+                catch (Exception e)
+                {
+
+                    Console.WriteLine(e.Message);
+                    return null;
+                }
+            }
+
+        }
     }
 }

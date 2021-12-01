@@ -48,13 +48,13 @@ namespace Dionysus.Controllers
         [HttpGet]
         [Route("getOverallAvarage")]
         [Authorize(Roles = "Administrator, Winemaker, Sommelier")]
-        public async Task<ActionResult<AvarageDataReadingDTO>> getReadingsSinceBeginning([FromHeader] DateTime date,[FromHeader]int batchId)
+        public async Task<ActionResult<AvarageDataReadingDTO>> getReadingsSinceBeginning([FromHeader]int batchId)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var overallAvarageReading = await uIBusinessLogic.getAvarageReadingSinceBeginning(date, batchId);
+                    var overallAvarageReading = await uIBusinessLogic.getAvarageReadingSinceBeginning(batchId);
                     if (overallAvarageReading != null)
                     {
                         return StatusCode(StatusCodes.Status200OK, overallAvarageReading);

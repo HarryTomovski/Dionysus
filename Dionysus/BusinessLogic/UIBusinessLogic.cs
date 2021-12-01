@@ -47,23 +47,24 @@ namespace Dionysus.BusinessLogic
 
         
 
-        public async Task<AvarageDataReadingDTO> getAvarageReadingSinceBeginning(DateTime date, int batchId)
+        public async Task<AvarageDataReadingDTO> getAvarageReadingSinceBeginning(int batchId)
         {
             var exists = await  batchDBAccess.batchExists(batchId);
             if (exists)
             {
                 //if the batch exsists there is going to be a value
                 var storedOn = await batchDBAccess.getStoredOn(batchId);
-                if (storedOn.HasValue)
+                var finishedStorage = await batchDBAccess.getFinishedOn(batchId);
+                if (storedOn.HasValue && finishedStorage.HasValue)
                 {
                     //dont need to pass the stored on date because we can get in from the batch id
-                    var storedOnValue = storedOn.Value;
-                    var readingsList = await environmentalReadingDBAccess.getReadingsSinceBeginning(date, batchId, storedOnValue);
+                    
+                    var readingsList = await environmentalReadingDBAccess.getReadingsSinceBeginning(finishedStorage.Value, batchId, storedOn.Value);
 
                     double? avarageTemperature = readingsList.Select(t => t.TemperatureReading).Average();
                     double? avarageHumidity = readingsList.Select(h => h.HumidityReading).Average();
 
-                    var dto = new AvarageDataReadingDTO(avarageHumidity, avarageTemperature, date.Date);
+                    var dto = new AvarageDataReadingDTO(avarageHumidity, avarageTemperature, DateTime.Today);
                     return dto;
                 }
                 else

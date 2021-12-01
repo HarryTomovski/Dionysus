@@ -13,7 +13,7 @@ namespace Dionysus.DBAccess.Interfaces
 
         Task<List<EnvironmentalReading>> getEnvironmentalValuesForPastMinute();
         Task<List<EnvironmentalReading>> getReadingsForDate(DateTime date);
-        Task<List<EnvironmentalReading>> getReadingsSinceBeginning(DateTime date, int batchId, DateTime storedOn);
+        Task<List<EnvironmentalReading>> getReadingsSinceBeginning(DateTime finishedStorage, int batchId, DateTime storedOn);
         
         
     }

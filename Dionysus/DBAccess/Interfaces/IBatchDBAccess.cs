@@ -10,6 +10,8 @@ namespace Dionysus.DBAccess.Interfaces
     {
         
         Task<DateTime?> getStoredOn(int batchid);
+
+        Task<DateTime?> getFinishedOn(int batchId);
         Task<int> addBatch(Batch batch);
         Task<bool> batchExists(int batchId);
 
