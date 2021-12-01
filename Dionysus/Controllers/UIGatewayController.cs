@@ -47,6 +47,7 @@ namespace Dionysus.Controllers
         }
         [HttpGet]
         [Route("getOverallAvarage")]
+        [Authorize(Roles = "Administrator, Winemaker, Sommelier")]
         public async Task<ActionResult<AvarageDataReadingDTO>> getReadingsSinceBeginning([FromHeader] DateTime date,[FromHeader]int batchId)
         {
             try
