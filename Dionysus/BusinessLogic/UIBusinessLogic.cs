@@ -39,97 +39,13 @@ namespace Dionysus.BusinessLogic
             }
         }
 
-        public async Task<int> setHumidityTarget(double humidity, int batchId)
-        {
-            int result = await environmentalReadingDBAccess.setHumidityTarget(humidity, batchId);
-            return result;
-        }
+       
 
-        public async Task<int> setTemperatureTarget(double temperature, int batchId)
-        {
+        
 
-            int result = await environmentalReadingDBAccess.setTemperatureTarget(temperature, batchId);
-            return result;
-        }
+       
 
-        public async Task<int> setManualControl(bool enableManualControl, int pin, int batchId)
-        {
-            int result = await environmentalReadingDBAccess.setManualControl(enableManualControl, pin, batchId);
-            return result;
-        }
-
-        public async Task<int> setMachineState(bool machineState, int pin, int batchId)
-        {
-            int result = await environmentalReadingDBAccess.setMachineState(machineState, pin, batchId);
-            return result;
-        }
-
-        public async Task<bool> getMachineState(int pin, int batchId)
-        {
-            var result = await environmentalReadingDBAccess.getMachineState(pin, batchId);
-            return result;
-        }
-
-        public async Task<int> addBatch(Batch batch)
-        {
-            var result = await environmentalReadingDBAccess.addBatch(batch);
-            return result;
-        }
-
-        public async Task<int> addEnvironmentalController(EnvironmentalController controller)
-        {
-            var result = await environmentalReadingDBAccess.addEnvironmentalController(controller);
-            return result;
-        }
-
-        public async Task<int> addSensor(Sensor sensor)
-        {
-            var result = await environmentalReadingDBAccess.addSensor(sensor);
-            return result;
-        }
-
-        public async Task<int> addRating(Rating rating)
-        {
-            var result = await environmentalReadingDBAccess.addRating(rating);
-            return result;
-        }
-        ////To be removed since added to UserBusinessLogic
-        //public async Task<User> addUser(User user, string? validationCode)
-        //{
-        //    var usernameValid = await environmentalReadingDBAccess.doesUsernameExsist(user.Username);
-        //    if(usernameValid == false)
-        //    {
-        //        if(user.Role == UserEnums.Somelier.ToString())
-        //        {
-        //            var valCode = await environmentalReadingDBAccess.getValidationCode(validationCode);
-        //            if(valCode is not null && valCode.Equals(validationCode))
-        //            {
-        //                var result = await environmentalReadingDBAccess.addUser(user);
-        //                if(result is not null)
-        //                {
-        //                    await environmentalReadingDBAccess.removeValidationCode(validationCode);
-        //                    return result;
-        //                }
-        //            }
-        //        }
-        //        else
-        //        {
-        //            var result = await environmentalReadingDBAccess.addUser(user);
-        //            return result;
-        //        }
-        //    }
-        //    return null;
-        //}
-        ////To be removed since addedd to UserBusinesslogic
-        //public async Task<User> getUser(string username, string password)
-        //{
-        //    var user = await environmentalReadingDBAccess.getUser(username);
-        //    if (user is not null && user.Password.Equals(password))
-        //    {
-        //        return user;
-        //    }
-        //    return null;
-        //}
+        
 
         public async Task<AvarageDataReadingDTO> getAvarageReadingSinceBeginning(DateTime date, int batchId)
         {

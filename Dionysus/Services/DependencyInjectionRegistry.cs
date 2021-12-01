@@ -16,10 +16,21 @@ namespace Dionysus.Services
         public static IServiceCollection AddMyServices(this IServiceCollection services)
         {
             services.AddSingleton<IEnvironmentalReadingDBAccess, EnvironmentalReadingDBAccess>();
+            
             services.AddSingleton<IBatchDBAccess, BatchDBAccess>();
+            services.AddScoped<IBatchBusnessLogic, BatchBusniessLogic>();
+
             services.AddSingleton<IJWTGeneration, JWTGeneration>();
+            
+            services.AddSingleton<IUserDBAccess, UserDBAccess>();
             services.AddScoped<IUserBusinessLogic, UserBusinessLogic>();
-            services.AddScoped<IUserDBAccess, UserDBAccess>();
+
+            services.AddSingleton<IRatingDBAccess, RatingDBAccess>();
+            services.AddScoped<IRatingBusinessLogic, RatingBusinessLogic>();
+
+            services.AddSingleton<IEnvironmentalControllerDBAccess, EnvironmentalControllerDBAccess>();
+            services.AddScoped<IEnvironmentalControllerBusinessLogic, EnvironmentalControllerBusinessLogic>();
+            
             //services.AddSingleton<IElevationCodeDBAccess, ElevationCodeDBAccess>();
             services.AddScoped<IRaspberryBusinessLogic, RaspberryBusinessLogic>();
             services.AddScoped<IUIBusinessLogic, UIBusinessLogic>();
