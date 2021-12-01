@@ -29,6 +29,8 @@ namespace Dionysus.DBModels
         public double TargetTemperature { get; set; }
         [Column("stored_on", TypeName = "datetime")]
         public DateTime StoredOn { get; set; }
+        [Column("finished_storage", TypeName = "datetime")]
+        public DateTime FinishedStorage { get; set; }
 
         [InverseProperty(nameof(EnvironmentalController.Batch))]
         public virtual ICollection<EnvironmentalController> EnvironmentalControllers { get; set; }
