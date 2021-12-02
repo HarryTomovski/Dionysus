@@ -27,7 +27,7 @@ namespace Dionysus
         }
 
         public IConfiguration Configuration { get; }
-
+        //private string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -69,6 +69,8 @@ namespace Dionysus
                 });
 
             services.AddHttpContextAccessor();
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,7 +86,10 @@ namespace Dionysus
             //app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors(options => options
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
             app.UseAuthentication();
             app.UseAuthorization();
 
