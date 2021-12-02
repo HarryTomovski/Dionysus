@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dionysus.Migrations
 {
     [DbContext(typeof(DionysusContext))]
-    [Migration("20211201203026_addFinishedStorage")]
-    partial class addFinishedStorage
+    [Migration("20211202111659_AddFinishedStorage")]
+    partial class AddFinishedStorage
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

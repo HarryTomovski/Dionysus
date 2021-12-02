@@ -52,7 +52,7 @@ namespace Dionysus.DBAccess
             {
                 try
                 {
-                    var storedOn = await Task.Run(() => context.Batches.Where(b => b.BatchId == batchid).Select(s => s.StoredOn).FirstOrDefault());
+                    var storedOn = await context.Batches.Where(b => b.BatchId == batchid).Select(s => s.StoredOn).FirstOrDefaultAsync();
                     return storedOn;
                 }
                 catch (Exception e)
