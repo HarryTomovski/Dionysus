@@ -36,6 +36,8 @@ namespace Dionysus.Services
             services.AddScoped<IRaspberryBusinessLogic, RaspberryBusinessLogic>();
 
             services.AddSingleton<INotificationDBAccess, NotificationDBAccess>();
+            services.AddScoped<INotificationBusinessLogic, NotificationBusinessLogic>();
+
             services.AddSingleton<ISensorDBAccess, SensorDBAccess>();
             services.AddScoped<ISensorBusinessLogic, SensorBusinessLogic>();
 
