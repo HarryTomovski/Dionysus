@@ -33,6 +33,25 @@ namespace Dionysus.DBAccess
             }
         }
 
+        public async Task<int> getNotificationCount(int batchId)
+        {
+
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    var count = await context.Notifications.Where(b => b.BatchId == batchId).CountAsync();
+                    return count;
+                }
+                catch (Exception e)
+                {
+
+                    Console.WriteLine(e.Message);
+                    return -1;
+                }
+            }
+        }
+
         public async Task<List<NotificationDTO>> getNotificationsForBatch(int batchId)
         {
             using (var context = new DionysusContext())

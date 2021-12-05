@@ -165,5 +165,23 @@ namespace Dionysus.DBAccess
             }
 
         }
+
+        public async Task<List<Batch>> getAllBatches()
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    var list = await context.Batches.ToListAsync();
+                    return list;
+                }
+                catch (Exception e)
+                {
+
+                    Console.WriteLine(e.Message);
+                    return null;
+                }
+            }
+        }
     }
 }

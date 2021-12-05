@@ -15,5 +15,7 @@ namespace Dionysus.DBAccess.Interfaces
 
         Task<List<NotificationDTO>> getNotificationsForBatch(int batchId);
 
+        Task<int> getNotificationCount(int batchId);
+
     }
 }

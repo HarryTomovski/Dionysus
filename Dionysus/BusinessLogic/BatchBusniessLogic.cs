@@ -33,5 +33,10 @@ namespace Dionysus.BusinessLogic
             var result = await batchDBAccess.addBatch(batch);
             return result;
         }
+
+        public async Task<List<Batch>> getAllBatches()
+        {
+            return await batchDBAccess.getAllBatches();
+        }
     }
 }

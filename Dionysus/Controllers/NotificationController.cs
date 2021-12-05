@@ -23,7 +23,7 @@ namespace Dionysus.Controllers
         }
 
         [HttpGet(nameof(GetNotificationsForBatch))]
-        [Authorize(Roles = "Winemaker")]
+        [Authorize(Roles = "Winemaker, Administrator")]
         public async Task<ActionResult<List<NotificationDTO>>> GetNotificationsForBatch(int batchId)
         {
             try
@@ -34,6 +34,36 @@ namespace Dionysus.Controllers
                     if (list != null)
                     {
                         return StatusCode(StatusCodes.Status200OK, list);
+                    }
+                    else
+                    {
+                        return StatusCode(StatusCodes.Status404NotFound);
+                    }
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest);
+                }
+            }
+            catch (Exception e)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
+
+        [HttpGet(nameof(getNotificationCount))]
+        [Authorize(Roles = "Winemaker, Administrator")]
+        public async Task<ActionResult<int>> getNotificationCount(int batchId)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var count = await notificationBusinessLogic.getNotificationCount(batchId);
+                    if (count!=-1)
+                    {
+                        return StatusCode(StatusCodes.Status200OK, count);
                     }
                     else
                     {

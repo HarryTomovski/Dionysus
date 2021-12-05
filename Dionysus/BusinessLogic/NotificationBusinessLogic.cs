@@ -17,6 +17,20 @@ namespace Dionysus.BusinessLogic
         {
             this.notificationDBAccess = notificationDBAccess;
         }
+
+        public async Task<int> getNotificationCount(int batchId)
+        {
+            var count = await notificationDBAccess.getNotificationCount(batchId);
+            if (count!=-1)
+            {
+                return count;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
         public async Task<List<NotificationDTO>> getNotifications(int batchId)
         {
             var list = await notificationDBAccess.getNotificationsForBatch(batchId);
