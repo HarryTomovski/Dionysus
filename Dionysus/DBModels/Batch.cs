@@ -15,6 +15,7 @@ namespace Dionysus.DBModels
         {
             EnvironmentalControllers = new HashSet<EnvironmentalController>();
             EnvironmentalReadings = new HashSet<EnvironmentalReading>();
+            Notifications = new HashSet<Notification>();
             Ratings = new HashSet<Rating>();
         }
 
@@ -36,6 +37,8 @@ namespace Dionysus.DBModels
         public virtual ICollection<EnvironmentalController> EnvironmentalControllers { get; set; }
         [InverseProperty(nameof(EnvironmentalReading.Batch))]
         public virtual ICollection<EnvironmentalReading> EnvironmentalReadings { get; set; }
+        [InverseProperty(nameof(Notification.Batch))]
+        public virtual ICollection<Notification> Notifications { get; set; }
         [InverseProperty(nameof(Rating.Batch))]
         public virtual ICollection<Rating> Ratings { get; set; }
     }

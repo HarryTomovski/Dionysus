@@ -11,6 +11,11 @@ namespace Dionysus.DBModels
     [Table("environmental_readings")]
     public partial class EnvironmentalReading
     {
+        public EnvironmentalReading()
+        {
+            Notifications = new HashSet<Notification>();
+        }
+
         [Key]
         [Column("reading_id")]
         public int ReadingId { get; set; }
@@ -31,5 +36,7 @@ namespace Dionysus.DBModels
         [ForeignKey(nameof(SensorPinNumber))]
         [InverseProperty(nameof(Sensor.EnvironmentalReadings))]
         public virtual Sensor SensorPinNumberNavigation { get; set; }
+        [InverseProperty(nameof(Notification.Reading))]
+        public virtual ICollection<Notification> Notifications { get; set; }
     }
 }
