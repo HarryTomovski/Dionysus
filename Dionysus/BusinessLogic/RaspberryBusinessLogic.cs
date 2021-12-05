@@ -14,12 +14,14 @@ namespace Dionysus.BusinessLogic
         private readonly IEnvironmentalReadingDBAccess environmentalReadingDBAccess;
         private readonly IEnvironmentalControllerDBAccess environmentalControllerDBAccess;
         private readonly IBatchDBAccess batchDBAccess;
+        private readonly INotificationDBAccess notificationDBAccess;
 
-        public RaspberryBusinessLogic(IEnvironmentalReadingDBAccess environmentalReadingDBAccess, IEnvironmentalControllerDBAccess environmentalControllerDBAccess, IBatchDBAccess batchDBAccess)
+        public RaspberryBusinessLogic(IEnvironmentalReadingDBAccess environmentalReadingDBAccess, IEnvironmentalControllerDBAccess environmentalControllerDBAccess, IBatchDBAccess batchDBAccess, INotificationDBAccess notificationDBAccess)
         {
             this.environmentalReadingDBAccess = environmentalReadingDBAccess;
             this.environmentalControllerDBAccess = environmentalControllerDBAccess;
             this.batchDBAccess = batchDBAccess;
+            this.notificationDBAccess = notificationDBAccess;
         }
 
 
@@ -53,6 +55,14 @@ namespace Dionysus.BusinessLogic
                 averageTemp = environmentalValues.Select(t => t.TemperatureReading).ToList().Average();
                 //activate heater
                 command.ActivateTemperatureDevice = averageTemp < targetedTemp;
+                //a notification is made for each entry that does not suffice the target temp
+                foreach (var tempReading in environmentalValues)
+                {
+                    if (tempReading.TemperatureReading<targetedTemp)
+                    {
+                        await notificationDBAccess.CreateNotification(batchId, tempReading.ReadingId);
+                    }
+                }
             }
             else
             {
@@ -63,6 +73,14 @@ namespace Dionysus.BusinessLogic
                 averageHum = environmentalValues.Select(h => h.HumidityReading).ToList().Average();
                 //activate dehumidifier
                 command.ActivateHumidityDevice = averageHum > targetedHum;
+                //a notification is made for each entry that does not suffice the target humidity
+                foreach (var humReading in environmentalValues)
+                {
+                    if (humReading.HumidityReading > targetedHum)
+                    {
+                        await notificationDBAccess.CreateNotification(batchId, humReading.ReadingId);
+                    }
+                }
             }
             else
             {
