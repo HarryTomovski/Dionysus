@@ -32,7 +32,7 @@ namespace Dionysus.JWT
             //we are gonna check every role, for now we only have if its admin
             var isAdministrator = user.Role.Contains(UserEnums.Administrator.ToString());
             var isWinemaker = user.Role.Contains(UserEnums.Winemaker.ToString());
-            var isSommelier = user.Role.Contains(UserEnums.Somelier.ToString());
+            var isSommelier = user.Role.Contains(UserEnums.Sommelier.ToString());
             var isDilletant = user.Role.Contains(UserEnums.Dilletant.ToString());
             if (isAdministrator)
             {
@@ -44,7 +44,7 @@ namespace Dionysus.JWT
             }
             if (isSommelier)
             {
-                claims.Add(new Claim(ClaimTypes.Role, UserEnums.Somelier.ToString()));
+                claims.Add(new Claim(ClaimTypes.Role, UserEnums.Sommelier.ToString()));
             }
             if (isDilletant)
             {
