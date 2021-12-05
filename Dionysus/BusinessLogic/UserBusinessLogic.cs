@@ -39,12 +39,13 @@ namespace Dionysus.BusinessLogic
         public async Task<bool> ChangeUserRole(string username, string role)
         {
             var exsists = await userDBAccess.userExsist(username);
-            if(exsists)
+            var validRole = Enum.IsDefined(typeof(UserEnums), role);
+            if(exsists && validRole)
             {
                 var success = await userDBAccess.ChangeUserRole(username, role);
                 return success;
             }
-            return exsists;
+            return false;
         }
     }
 

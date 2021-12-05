@@ -7,7 +7,9 @@ namespace Dionysus.Models
 {
     public enum UserEnums
     {
+        Dilletant,
         Somelier,
-        Dilletant   
+        Winemaker,
+        Administrator
     }
 }

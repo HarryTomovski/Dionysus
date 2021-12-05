@@ -61,7 +61,7 @@ namespace Dionysus.DBAccess
                         Name = model.Name,
                         Username = model.Username,
                         Password = model.Password,
-                        Role = "Dilettante"
+                        Role = UserEnums.Dilletant.ToString()
                     };
 
                     await context.Users.AddAsync(user);
