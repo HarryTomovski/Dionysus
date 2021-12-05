@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using Dionysus.Models.RequestModels;
 
 namespace Dionysus.Controllers
 {
@@ -70,11 +71,11 @@ namespace Dionysus.Controllers
 
         [HttpPost(nameof(UpdateUserRole))]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<string>> UpdateUserRole(string username, string role)
+        public async Task<ActionResult<string>> UpdateUserRole(UpdateUserRoleModel model)
         {
             try
             {
-                var succeess = await userBusinessLogic.ChangeUserRole(username, role);
+                var succeess = await userBusinessLogic.ChangeUserRole(model.Username, model.Role);
                 if (succeess == true)
                 {
                     return StatusCode(StatusCodes.Status200OK, succeess);

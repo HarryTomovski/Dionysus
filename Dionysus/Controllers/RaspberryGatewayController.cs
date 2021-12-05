@@ -25,8 +25,8 @@ namespace Dionysus.Controllers
         }
 
         //add batch id here and in the embedded layer
-        [HttpPost]
-        public async Task<ActionResult> storeReading(EnvironmentalReading reading)
+        [HttpPost(nameof(StoreReading))]
+        public async Task<ActionResult> StoreReading(EnvironmentalReading reading)
         {
             try
             {
@@ -50,8 +50,8 @@ namespace Dionysus.Controllers
         }
 
 
-        [HttpGet]
-        public async Task<ActionResult> getCommand([FromHeader] int temperaturePin, [FromHeader] int humidityPin, [FromHeader] int batchId)
+        [HttpGet(nameof(GetCommand))]
+        public async Task<ActionResult> GetCommand([FromHeader] int temperaturePin, [FromHeader] int humidityPin, [FromHeader] int batchId)
         {
             try
             {

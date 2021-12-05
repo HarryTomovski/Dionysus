@@ -20,10 +20,9 @@ namespace Dionysus.Controllers
             this.ratingBusinessLogic = ratingBusinessLogic;
         }
 
-        [HttpPost]
-        [Route("addRating")]
+        [HttpPost(nameof(AddRating))]
         [Authorize(Roles = "Administrator, Winemaker, Sommelier")]
-        public async Task<ActionResult> addRating(Rating rating)
+        public async Task<ActionResult> AddRating(Rating rating)
         {
             try
             {

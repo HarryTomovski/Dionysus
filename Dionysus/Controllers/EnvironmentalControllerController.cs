@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dionysus.DBModels;
+using Dionysus.Models.RequestModels;
 
 namespace Dionysus.Controllers
 {
@@ -19,18 +20,17 @@ namespace Dionysus.Controllers
         {
             this.environmentalController = environmentalController;
         }
-        [HttpPut]
-        [Route("setManualControl")]
+        [HttpPut(nameof(SetManualControl))]
         [Authorize(Roles = "Administrator, Winemaker")]
-        public async Task<ActionResult> setManualControl([FromHeader] bool enableManualControl, [FromHeader] int pinNo, [FromHeader] int batchId)
+        public async Task<ActionResult> SetManualControl(SetManualControlModel model)
         {
 
             try
             {
-                int result = await environmentalController.setManualControl(enableManualControl, pinNo, batchId);
+                int result = await environmentalController.setManualControl(model.EnableManualControl, model.PinNo, model.BatchId);
                 if (result == 1)
                 {
-                    return StatusCode(StatusCodes.Status200OK, enableManualControl);
+                    return StatusCode(StatusCodes.Status200OK);
                 }
                 else
                 {
@@ -44,15 +44,14 @@ namespace Dionysus.Controllers
             }
         }
 
-        [HttpPut]
-        [Route("setMachineState")]
+        [HttpPut(nameof(SetMachineState))]
         [Authorize(Roles = "Administrator, Winemaker")]
-        public async Task<ActionResult> setMachineState([FromHeader] bool machineState, [FromHeader] int pinNo, [FromHeader] int batchId)
+        public async Task<ActionResult> SetMachineState(SetMachineStateModel model)
         {
 
             try
             {
-                int result = await environmentalController.setMachineState(machineState, pinNo, batchId);
+                int result = await environmentalController.setMachineState(model.MachineState, model.PinNo, model.BatchId);
                 if (result == 1)
                 {
                     return StatusCode(StatusCodes.Status200OK, result);
@@ -69,14 +68,14 @@ namespace Dionysus.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("getMachineStates")]
-        public async Task<ActionResult> getMachineStates([FromHeader] int pin, [FromHeader] int batchId)
+        [HttpGet(nameof(GetMachineStates))]
+        [Authorize(Roles = "Administrator, Winemaker")]
+        public async Task<ActionResult> GetMachineStates(GetMachineStatesModel model)
         {
             try
             {
-                var result = await environmentalController.getMachineState(pin, batchId);
-                return StatusCode(StatusCodes.Status200OK, result);
+                var result = await environmentalController.getMachineState(model.PinNo, model.BatchId);
+                return StatusCode(StatusCodes.Status200OK);
 
             }
             catch (Exception e)
@@ -87,10 +86,9 @@ namespace Dionysus.Controllers
 
 
 
-        [HttpPost]
-        [Route("addController")]
+        [HttpPost(nameof(AddController))]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult> addController(EnvironmentalController controller, [FromHeader] int batchId)
+        public async Task<ActionResult> AddController(EnvironmentalController controller)
         {
             try
             {

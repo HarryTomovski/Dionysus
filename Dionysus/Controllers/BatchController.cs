@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Dionysus.DBModels;
+using Dionysus.Models.RequestModels;
 
 namespace Dionysus.Controllers
 {
@@ -14,7 +15,7 @@ namespace Dionysus.Controllers
     [ApiController]
     public class BatchController : ControllerBase
     {
-        private IBatchBusnessLogic batchBusnessLogic;
+        private readonly IBatchBusnessLogic batchBusnessLogic;
         public BatchController(IBatchBusnessLogic batchBusnessLogic)
         {
             this.batchBusnessLogic = batchBusnessLogic;
@@ -23,17 +24,16 @@ namespace Dionysus.Controllers
 
         //make get target based on batch id
         //check if the target is set, if yes then update
-        [HttpPut]
-        [Route("setTemperatureTarget")]
+        [HttpPut(nameof(SetTemperatureTarget))]
         [Authorize(Roles = "Administrator, Winemaker")]
-        public async Task<ActionResult> setTemperatureTarget([FromHeader] double temperature, [FromHeader] int batchId)
+        public async Task<ActionResult> SetTemperatureTarget(SetTemperatureModel model)
         {
             try
             {
-                int result = await batchBusnessLogic.setTemperatureTarget(temperature, batchId);
+                int result = await batchBusnessLogic.setTemperatureTarget(model.TemperatureTarget, model.BatchId);
                 if (result == 1)
                 {
-                    return StatusCode(StatusCodes.Status200OK, temperature);
+                    return StatusCode(StatusCodes.Status200OK);
                 }
                 else
                 {
@@ -49,18 +49,17 @@ namespace Dionysus.Controllers
 
         //make get target based on batch id
         //check if the target is set, if yes then update
-        [HttpPut]
-        [Route("setHumidityTarget")]
+        [HttpPut (nameof(SetHumidityTarget))]
         [Authorize(Roles = "Administrator, Winemaker")]
-        public async Task<ActionResult> setHumidityTarget([FromHeader] double humidity, [FromHeader] int batchId)
+        public async Task<ActionResult> SetHumidityTarget(SetHumidityModel model)
         {
 
             try
             {
-                int result = await batchBusnessLogic.setHumidityTarget(humidity, batchId);
+                int result = await batchBusnessLogic.setHumidityTarget(model.HumidityTarget, model.BatchId);
                 if (result == 1)
                 {
-                    return StatusCode(StatusCodes.Status200OK, humidity);
+                    return StatusCode(StatusCodes.Status200OK);
                 }
                 else
                 {
@@ -73,10 +72,9 @@ namespace Dionysus.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
-        [HttpPost]
-        [Route("addBatch")]
+        [HttpPost(nameof(AddBatch))]
         [Authorize(Roles = "Administrator, Winemaker")]
-        public async Task<ActionResult> addBatch(Batch batch)
+        public async Task<ActionResult> AddBatch(Batch batch)
         {
             try
             {

@@ -19,10 +19,10 @@ namespace Dionysus.Controllers
         {
             this.sensorBusinessLogic = sensorBusinessLogic;
         }
-        [HttpPost]
-        [Route("addSensor")]
+        [HttpPost(nameof(AddSensor))]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult> addSensor(Sensor sensor, [FromHeader] int batchId)
+        //add batch id in sensor info
+        public async Task<ActionResult> AddSensor(Sensor sensor, [FromHeader] int batchId)
         {
             try
             {

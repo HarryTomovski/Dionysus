@@ -23,14 +23,13 @@ namespace Dionysus.Controllers
             this.uIBusinessLogic = uIBusinessLogic;
 
         }
-        [HttpGet]
-        [Route("getReadingsForDate/{date}")]
-        public async Task<ActionResult<AvarageDataReadingDTO>> getAvarageReadingsForDate(DateTime date)
+        [HttpGet(nameof(GetAvarageReadingsForDate))]
+        public async Task<ActionResult<AvarageDataReadingDTO>> GetAvarageReadingsForDate([FromQuery]DateTime date)
         {
            //might not need try catch here necause we have it in the db access class
             try
             {
-                var readingForDate = await Task.Run(() => uIBusinessLogic.getAvarageReadingForDate(date));
+                var readingForDate = await uIBusinessLogic.getAvarageReadingForDate(date);
                 if (readingForDate is not null)
                 {
                     return StatusCode(StatusCodes.Status200OK, readingForDate);
@@ -45,10 +44,9 @@ namespace Dionysus.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
-        [HttpGet]
-        [Route("getOverallAvarage")]
+        [HttpGet(nameof(GetReadingsSinceBeginning))]
         [Authorize(Roles = "Administrator, Winemaker, Sommelier")]
-        public async Task<ActionResult<AvarageDataReadingDTO>> getReadingsSinceBeginning([FromHeader]int batchId)
+        public async Task<ActionResult<AvarageDataReadingDTO>> GetReadingsSinceBeginning([FromBody]int batchId)
         {
             try
             {
@@ -74,14 +72,6 @@ namespace Dionysus.Controllers
 
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
-        }
-
-        
-
-        
-
-        
-
-        
+        }   
     }
 }

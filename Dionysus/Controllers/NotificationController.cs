@@ -24,7 +24,7 @@ namespace Dionysus.Controllers
 
         [HttpGet(nameof(GetNotificationsForBatch))]
         [Authorize(Roles = "Winemaker, Administrator")]
-        public async Task<ActionResult<List<NotificationDTO>>> GetNotificationsForBatch(int batchId)
+        public async Task<ActionResult<List<NotificationDTO>>> GetNotificationsForBatch([FromBody]int batchId)
         {
             try
             {
@@ -52,9 +52,10 @@ namespace Dionysus.Controllers
             }
         }
 
-        [HttpGet(nameof(getNotificationCount))]
+        [HttpGet(nameof(GetNotificationCount))]
         [Authorize(Roles = "Winemaker, Administrator")]
-        public async Task<ActionResult<int>> getNotificationCount(int batchId)
+        //WHY? we can get this when the FE gets all notifications
+        public async Task<ActionResult<int>> GetNotificationCount([FromBody]int batchId)
         {
             try
             {
