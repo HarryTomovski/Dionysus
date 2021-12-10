@@ -1,5 +1,6 @@
 ﻿using Dionysus.DBModels;
 using Dionysus.Models;
+using Dionysus.Models.ResponceModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,6 @@ namespace Dionysus.DBAccess.Interfaces
         Task<string> LoginAsync(UserLoginModel model);
         Task<bool> ChangeUserRole(string username, string role);
         Task<bool> userExsist(string username);
-        
+        Task<List<UserResponceModels>> getAllUsers();
     }
 }

@@ -2,6 +2,7 @@
 using Dionysus.DBAccess.Interfaces;
 using Dionysus.DBModels;
 using Dionysus.Models;
+using Dionysus.Models.ResponceModels;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -46,6 +47,16 @@ namespace Dionysus.BusinessLogic
                 return success;
             }
             return false;
+        }
+
+        public Task<List<UserResponceModels>> getAllUsers()
+        {
+            var users = userDBAccess.getAllUsers();
+            if (users != null)
+            {
+                return users;
+            }
+            return null;
         }
     }
 

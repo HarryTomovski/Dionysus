@@ -3,6 +3,7 @@ using Dionysus.DBAccess.Interfaces;
 using Dionysus.DBModels;
 using Dionysus.JWT;
 using Dionysus.Models;
+using Dionysus.Models.ResponceModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -115,6 +116,24 @@ namespace Dionysus.DBAccess
                 {
                     Console.WriteLine(e.Message);
                     return false;
+                }
+            }
+        }
+
+        public async Task<List<UserResponceModels>> getAllUsers()
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    var users = await context.Users.Select(u => new UserResponceModels(){ Username = u.Username, 
+                                                                                           Role = u.Role }).ToListAsync();
+                    return users;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return null;
                 }
             }
         }

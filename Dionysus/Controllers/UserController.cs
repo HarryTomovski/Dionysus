@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Dionysus.Models.RequestModels;
+using Dionysus.Models.ResponceModels;
 
 namespace Dionysus.Controllers
 {
@@ -79,6 +80,28 @@ namespace Dionysus.Controllers
                 if (succeess == true)
                 {
                     return StatusCode(StatusCodes.Status200OK, succeess);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest);
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPost(nameof(GetAllUsers))]
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult<List<UserResponceModels>>> GetAllUsers()
+        {
+            try
+            {
+                var users = await userBusinessLogic.getAllUsers();
+                if (users != null)
+                {
+                    return StatusCode(StatusCodes.Status200OK, users);
                 }
                 else
                 {
