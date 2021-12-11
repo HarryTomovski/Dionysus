@@ -12,5 +12,6 @@ namespace Dionysus.BusinessLogic.Interfaces
         Task<int> setHumidityTarget(double humidity, int batchId);
         Task<int> addBatch(Batch batch);
         Task<List<Batch>> getAllBatches();
+        Task<Batch> getBatch(int batchId);
     }
 }

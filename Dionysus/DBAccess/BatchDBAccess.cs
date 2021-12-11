@@ -183,5 +183,23 @@ namespace Dionysus.DBAccess
                 }
             }
         }
+
+        public async Task<Batch> getBatch(int batchId)
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    var batch = await context.Batches.FirstOrDefaultAsync(b => b.BatchId == batchId);
+                    return batch;
+                }
+                catch (Exception e)
+                {
+
+                    Console.WriteLine(e.Message);
+                    return null;
+                }
+            }
+        }
     }
 }

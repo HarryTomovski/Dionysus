@@ -19,5 +19,6 @@ namespace Dionysus.DBAccess.Interfaces
         Task<double> getTemperatureTarget(int batchId);
         Task<int> setHumidityTarget(double humidity, int batchId);
         Task<double> getHumidityTarget(int batchId);
+        Task<Batch> getBatch(int batchId);
     }
 }

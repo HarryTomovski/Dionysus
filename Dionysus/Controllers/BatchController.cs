@@ -116,5 +116,28 @@ namespace Dionysus.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
+
+        [HttpGet(nameof(GetBatch))]
+        [Authorize(Roles = "Administrator, Winemaker")]
+        public async Task<ActionResult<Batch>> GetBatch(int batchId)
+        {
+            try
+            {
+                var list = await batchBusnessLogic.getBatch(batchId);
+                if (list != null)
+                {
+                    return StatusCode(StatusCodes.Status200OK, list);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest);
+                }
+            }
+            catch (Exception e)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
     }
 }
