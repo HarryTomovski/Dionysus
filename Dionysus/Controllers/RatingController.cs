@@ -45,7 +45,7 @@ namespace Dionysus.Controllers
 
         [HttpPost(nameof(GetRatings))]
         [Authorize(Roles = "Administrator, Winemaker, Sommelier")]
-        public async Task<ActionResult> GetRatings(int batchId)
+        public async Task<ActionResult<List<Rating>>> GetRatings(int batchId)
         {
             try
             {
