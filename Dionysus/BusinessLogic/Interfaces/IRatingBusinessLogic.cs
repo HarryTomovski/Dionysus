@@ -9,5 +9,6 @@ namespace Dionysus.BusinessLogic.Interfaces
     public interface IRatingBusinessLogic
     {
         Task<int> addRating(Rating rating);
+        Task<List<Rating>> getRatings(int batchId);
     }
 }

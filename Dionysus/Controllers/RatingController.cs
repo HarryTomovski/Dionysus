@@ -42,5 +42,28 @@ namespace Dionysus.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
+
+        [HttpPost(nameof(GetRatings))]
+        [Authorize(Roles = "Administrator, Winemaker, Sommelier")]
+        public async Task<ActionResult> GetRatings(int batchId)
+        {
+            try
+            {
+                var result = await ratingBusinessLogic.getRatings(batchId);
+                if (result is not null)
+                {
+                    return StatusCode(StatusCodes.Status200OK, result);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest);
+                }
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
     }
 }

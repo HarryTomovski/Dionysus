@@ -21,6 +21,10 @@ namespace Dionysus.BusinessLogic
             return result;
         }
 
-       
+        public async Task<List<Rating>> getRatings(int batchId)
+        {
+            var result = await ratingDBAccess.getRatings(batchId);
+            return result;
+        }
     }
 }

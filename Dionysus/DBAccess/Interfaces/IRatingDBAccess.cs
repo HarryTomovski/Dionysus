@@ -9,5 +9,6 @@ namespace Dionysus.DBAccess.Interfaces
     public interface IRatingDBAccess
     {
         Task<int> addRating(Rating rating);
+        Task<List<Rating>> getRatings(int batchId);
     }
 }
