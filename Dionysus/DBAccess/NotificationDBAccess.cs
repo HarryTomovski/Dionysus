@@ -103,18 +103,10 @@ namespace Dionysus.DBAccess
                 try
                 {
                     var exists = await context.Notifications.FindAsync(notificationId);
-                    if (exists!=null)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    return exists != null; 
                 }
                 catch (Exception e)
                 {
-
                     Console.WriteLine(e.Message);
                     return false;
                 }
@@ -129,11 +121,11 @@ namespace Dionysus.DBAccess
                 {
                     var notification = await context.Notifications.FindAsync(notificatoinID);
                     
-                        notification.Resolved = true;
-                        context.Notifications.Attach(notification);
-                        context.Entry(notification).Property(n => n.Resolved).IsModified = true;
-                        await context.SaveChangesAsync();
-                        return true;
+                    notification.Resolved = true;
+                    context.Notifications.Attach(notification);
+                    context.Entry(notification).Property(n => n.Resolved).IsModified = true;
+                    await context.SaveChangesAsync();
+                    return true;
                     
                 }
                 catch (Exception e)

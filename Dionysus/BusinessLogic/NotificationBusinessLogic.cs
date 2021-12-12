@@ -45,14 +45,7 @@ namespace Dionysus.BusinessLogic
                 if (exist)
                 {
                     var success = await notificationDBAccess.ResolveNotification(notificationId);
-                    if (success)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    return success;
                 }
                 else
                 {

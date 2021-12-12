@@ -82,5 +82,36 @@ namespace Dionysus.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
+
+        [HttpPut(nameof(ResolveNotification))]
+        [Authorize(Roles = "Winemaker, Administrator")]
+        //WHY? we can get this when the FE gets all notifications
+        public async Task<ActionResult<List<NotificationDTO>>> ResolveNotification([FromQuery] int notificationId)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var notification = await notificationBusinessLogic.resolveNotification(notificationId);
+                    if (notification)
+                    {
+                        return StatusCode(StatusCodes.Status200OK);
+                    }
+                    else
+                    {
+                        return StatusCode(StatusCodes.Status404NotFound);
+                    }
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest);
+                }
+            }
+            catch (Exception e)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
     }
 }

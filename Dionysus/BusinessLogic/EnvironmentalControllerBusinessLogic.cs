@@ -33,11 +33,15 @@ namespace Dionysus.BusinessLogic
             return result;
         }
 
-
-
         public async Task<int> addEnvironmentalController(EnvironmentalController controller)
         {
             var result = await environmentalController.addEnvironmentalController(controller);
+            return result;
+        }
+
+        public async Task<bool> getManualControl(int pinNo, int batchId)
+        {
+            var result = await environmentalController.getManualControl(pinNo, batchId);
             return result;
         }
     }

@@ -13,5 +13,6 @@ namespace Dionysus.BusinessLogic.Interfaces
         Task<bool> getMachineState(int devicePin, int batchId);
 
         Task<int> addEnvironmentalController(EnvironmentalController controller);
+        Task<bool> getManualControl(int pinNo, int batchId);
     }
 }

@@ -44,6 +44,22 @@ namespace Dionysus.Controllers
             }
         }
 
+        [HttpGet(nameof(GetManualControl))]
+        [Authorize(Roles = "Administrator, Winemaker")]
+        public async Task<ActionResult<bool>> GetManualControl(GetManualControlModel model)
+        {
+            try
+            {
+                var result = await environmentalController.getManualControl(model.PinNo, model.BatchId);
+                return StatusCode(StatusCodes.Status200OK);
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
+
         [HttpPut(nameof(SetMachineState))]
         [Authorize(Roles = "Administrator, Winemaker")]
         public async Task<ActionResult> SetMachineState(SetMachineStateModel model)
