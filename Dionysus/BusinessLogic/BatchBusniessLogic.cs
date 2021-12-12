@@ -11,10 +11,12 @@ namespace Dionysus.BusinessLogic
     public class BatchBusniessLogic : IBatchBusnessLogic
     {
         private readonly IBatchDBAccess batchDBAccess;
+        private readonly IRatingDBAccess ratingDBAccess;
 
-        public BatchBusniessLogic(IBatchDBAccess batchDBAccess)
+        public BatchBusniessLogic(IBatchDBAccess batchDBAccess, IRatingDBAccess ratingDBAccess)
         {
             this.batchDBAccess = batchDBAccess;
+            this.ratingDBAccess = ratingDBAccess;
         }
         public async Task<int> setHumidityTarget(double humidity, int batchId)
         {
@@ -42,6 +44,7 @@ namespace Dionysus.BusinessLogic
         public async Task<Batch> getBatch(int batchId)
         {
             var result = await batchDBAccess.getBatch(batchId);
+            result.Ratings = await ratingDBAccess.getRatings(batchId);
             return result;
         }
     }
