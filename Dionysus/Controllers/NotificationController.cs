@@ -24,7 +24,7 @@ namespace Dionysus.Controllers
 
         [HttpGet(nameof(GetNotificationsForBatch))]
         [Authorize(Roles = "Winemaker, Administrator")]
-        public async Task<ActionResult<List<NotificationDTO>>> GetNotificationsForBatch([FromBody]int batchId)
+        public async Task<ActionResult<List<NotificationDTO>>> GetNotificationsForBatch([FromQuery]int batchId)
         {
             try
             {
