@@ -70,13 +70,6 @@ namespace Dionysus.DBAccess
                 }
             }
         }
-
-       
-
-       
-
-        
-
        
         public async Task<List<EnvironmentalReading>> getReadingsSinceBeginning(DateTime finishedStorage, int batchId, DateTime storedOn)
         {
@@ -87,6 +80,26 @@ namespace Dionysus.DBAccess
                     //Maybe we need a finished storage period in batch
                     var readingsSinceStoredOn = await context.EnvironmentalReadings.Where(b => b.BatchId == batchId && storedOn.Date <= finishedStorage.Date).ToListAsync();
                     
+                    return readingsSinceStoredOn;
+                }
+
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return null;
+                }
+            }
+        }
+
+        public async Task<List<EnvironmentalReading>> GetReadingsForBatch(int batchId)
+        {
+            using (var context = new DionysusContext())
+            {
+                try
+                {
+                    //Maybe we need a finished storage period in batch
+                    var readingsSinceStoredOn = await context.EnvironmentalReadings.Where(b => b.BatchId == batchId).ToListAsync();
+
                     return readingsSinceStoredOn;
                 }
 

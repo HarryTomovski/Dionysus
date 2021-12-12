@@ -39,13 +39,6 @@ namespace Dionysus.BusinessLogic
             }
         }
 
-       
-
-        
-
-       
-
-        
 
         public async Task<AvarageDataReadingDTO> getAvarageReadingSinceBeginning(int batchId)
         {
@@ -76,6 +69,12 @@ namespace Dionysus.BusinessLogic
             {
                 return null;
             }
+        }
+
+        public async Task<List<EnvironmentalReading>> GetReadingsForBatch(int batchId)
+        {
+            var readings = await environmentalReadingDBAccess.GetReadingsForBatch(batchId);
+            return readings;
         }
     }
 }

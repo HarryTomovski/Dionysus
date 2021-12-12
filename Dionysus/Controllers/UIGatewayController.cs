@@ -46,7 +46,7 @@ namespace Dionysus.Controllers
         }
         [HttpGet(nameof(GetReadingsSinceBeginning))]
         [Authorize(Roles = "Administrator, Winemaker, Sommelier")]
-        public async Task<ActionResult<AvarageDataReadingDTO>> GetReadingsSinceBeginning([FromBody]int batchId)
+        public async Task<ActionResult<AvarageDataReadingDTO>> GetReadingsSinceBeginning([FromQuery]int batchId)
         {
             try
             {
@@ -72,6 +72,35 @@ namespace Dionysus.Controllers
 
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
-        }   
+        }
+        [HttpGet(nameof(GetReadingsForBatch))]
+        [Authorize(Roles = "Administrator, Winemaker, Sommelier")]
+        public async Task<ActionResult<List<AvarageDataReadingDTO>>> GetReadingsForBatch([FromQuery] int batchId)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var overallAvarageReading = await uIBusinessLogic.GetReadingsForBatch(batchId);
+                    if (overallAvarageReading != null)
+                    {
+                        return StatusCode(StatusCodes.Status200OK, overallAvarageReading);
+                    }
+                    else
+                    {
+                        return StatusCode(StatusCodes.Status404NotFound);
+                    }
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest);
+                }
+            }
+            catch (Exception e)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
     }
 }

@@ -10,11 +10,9 @@ namespace Dionysus.DBAccess.Interfaces
     public interface IEnvironmentalReadingDBAccess
     {
         Task<bool> StoreReading(EnvironmentalReading reading);
-
         Task<List<EnvironmentalReading>> getEnvironmentalValuesForPastMinute();
         Task<List<EnvironmentalReading>> getReadingsForDate(DateTime date);
         Task<List<EnvironmentalReading>> getReadingsSinceBeginning(DateTime finishedStorage, int batchId, DateTime storedOn);
-        
-        
+        Task<List<EnvironmentalReading>> GetReadingsForBatch(int batchId);
     }
 }

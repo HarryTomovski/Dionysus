@@ -52,19 +52,19 @@ namespace Dionysus.Controllers
             }
         }
 
-        [HttpGet(nameof(GetNotificationCount))]
+        [HttpGet(nameof(GetAllNotifications))]
         [Authorize(Roles = "Winemaker, Administrator")]
         //WHY? we can get this when the FE gets all notifications
-        public async Task<ActionResult<int>> GetNotificationCount([FromBody]int batchId)
+        public async Task<ActionResult<List<NotificationDTO>>> GetAllNotifications()
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var count = await notificationBusinessLogic.getNotificationCount(batchId);
-                    if (count!=-1)
+                    var notifications = await notificationBusinessLogic.GetALLNotifications();
+                    if (notifications is not null)
                     {
-                        return StatusCode(StatusCodes.Status200OK, count);
+                        return StatusCode(StatusCodes.Status200OK, notifications);
                     }
                     else
                     {

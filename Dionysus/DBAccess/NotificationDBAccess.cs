@@ -33,21 +33,26 @@ namespace Dionysus.DBAccess
             }
         }
 
-        public async Task<int> getNotificationCount(int batchId)
+        public async Task<List<NotificationDTO>> GetAllNotification()
         {
 
             using (var context = new DionysusContext())
             {
+                List<NotificationDTO> list = new();
                 try
                 {
-                    var count = await context.Notifications.Where(b => b.BatchId == batchId).CountAsync();
-                    return count;
+                    var notificationsBatchId = await context.Notifications.Select(n => n.BatchId).ToListAsync();
+                    foreach(int id in notificationsBatchId)
+                    {
+                        list.AddRange(await getNotificationsForBatch(id));
+                    }
+                    return list;
                 }
                 catch (Exception e)
                 {
 
                     Console.WriteLine(e.Message);
-                    return -1;
+                    return list;
                 }
             }
         }

@@ -11,6 +11,6 @@ namespace Dionysus.BusinessLogic.Interfaces
     {
         Task<List<NotificationDTO>> getNotifications(int batchId);
         Task<bool> resolveNotification(int notificationId);
-        Task<int> getNotificationCount(int batchId);
+        Task<List<NotificationDTO>> GetALLNotifications();
     }
 }
