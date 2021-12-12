@@ -22,12 +22,12 @@ namespace Dionysus.Controllers
 
         [HttpPost(nameof(AddRating))]
         [Authorize(Roles = "Administrator, Winemaker, Sommelier")]
-        public async Task<ActionResult> AddRating(Rating rating)
+        public async Task<ActionResult> AddRating([FromBody] Rating rating)
         {
             try
             {
                 var result = await ratingBusinessLogic.addRating(rating);
-                if (result != -1)
+                if (result == 1)
                 {
                     return StatusCode(StatusCodes.Status200OK, result);
                 }
@@ -43,7 +43,7 @@ namespace Dionysus.Controllers
             }
         }
 
-        [HttpPost(nameof(GetRatings))]
+        [HttpGet(nameof(GetRatings))]
         [Authorize(Roles = "Administrator, Winemaker, Sommelier")]
         public async Task<ActionResult<List<Rating>>> GetRatings([FromQuery]int batchId)
         {
