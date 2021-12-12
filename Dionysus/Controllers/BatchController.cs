@@ -119,7 +119,7 @@ namespace Dionysus.Controllers
 
         [HttpGet(nameof(GetBatch))]
         [Authorize(Roles = "Administrator, Winemaker")]
-        public async Task<ActionResult<Batch>> GetBatch(int batchId)
+        public async Task<ActionResult<Batch>> GetBatch([FromQuery]int batchId)
         {
             try
             {

@@ -32,15 +32,16 @@ namespace Dionysus.DBAccess
         {
             using (var context = new DionysusContext())
             {
+                List<Rating> ratings = new();
                 try
                 {
-                    var ratings = await context.Ratings.Select(r => r).Where(r => r.BatchId == batchId).ToListAsync();
+                    ratings = await context.Ratings.Select(r => r).Where(r => r.BatchId == batchId).ToListAsync();
                     return ratings;
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
-                    return null;
+                    return ratings;
                 }
             }
         }
