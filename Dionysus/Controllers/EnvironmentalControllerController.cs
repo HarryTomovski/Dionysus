@@ -51,7 +51,7 @@ namespace Dionysus.Controllers
             try
             {
                 var result = await environmentalController.getManualControl(model.PinNo, model.BatchId);
-                return StatusCode(StatusCodes.Status200OK);
+                return StatusCode(StatusCodes.Status200OK, result);
 
             }
             catch (Exception e)
