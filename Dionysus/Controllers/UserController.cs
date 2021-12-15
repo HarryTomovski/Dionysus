@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Dionysus.Models.RequestModels;
 using Dionysus.Models.ResponceModels;
+using Dionysus.DTO_s;
 
 namespace Dionysus.Controllers
 {
@@ -94,7 +95,7 @@ namespace Dionysus.Controllers
 
         [HttpPost(nameof(GetAllUsers))]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<List<UserResponceModels>>> GetAllUsers()
+        public async Task<ActionResult<List<UserDTO>>> GetAllUsers()
         {
             try
             {

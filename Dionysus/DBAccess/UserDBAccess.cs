@@ -120,14 +120,13 @@ namespace Dionysus.DBAccess
             }
         }
 
-        public async Task<List<UserResponceModels>> getAllUsers()
+        public async Task<List<User>> getAllUsers()
         {
             using (var context = new DionysusContext())
             {
                 try
                 {
-                    var users = await context.Users.Select(u => new UserResponceModels(){ Username = u.Username, 
-                                                                                           Role = u.Role }).ToListAsync();
+                    var users = await context.Users.ToListAsync();
                     return users;
                 }
                 catch (Exception e)

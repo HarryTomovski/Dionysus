@@ -71,10 +71,21 @@ namespace Dionysus.BusinessLogic
             }
         }
 
-        public async Task<List<EnvironmentalReading>> GetReadingsForBatch(int batchId)
+        public async Task<List<EnvironmentalReadingDTO>> GetReadingsForBatch(int batchId)
         {
             var readings = await environmentalReadingDBAccess.GetReadingsForBatch(batchId);
-            return readings;
+            List<EnvironmentalReadingDTO> list = new();
+            foreach(var r in readings)
+            {
+                EnvironmentalReadingDTO dto = new()
+                {
+                    HumidityReading = r.HumidityReading,
+                    TemperatureReading = r.TemperatureReading,
+                    DateTime = r.DateTime
+                };
+                list.Add(dto);
+            }
+            return list;
         }
     }
 }

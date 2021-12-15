@@ -1,4 +1,5 @@
 ﻿using Dionysus.DBModels;
+using Dionysus.DTO_s;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace Dionysus.BusinessLogic.Interfaces
     public interface IRatingBusinessLogic
     {
         Task<int> addRating(Rating rating);
-        Task<List<Rating>> getRatings(int batchId);
+        Task<List<RatingDTO>> getRatings(int batchId);
     }
 }

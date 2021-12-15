@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dionysus.DTO_s;
 
 namespace Dionysus.Controllers
 {
@@ -45,7 +46,7 @@ namespace Dionysus.Controllers
 
         [HttpGet(nameof(GetRatings))]
         [Authorize(Roles = "Administrator, Winemaker, Sommelier")]
-        public async Task<ActionResult<List<Rating>>> GetRatings([FromQuery]int batchId)
+        public async Task<ActionResult<List<RatingDTO>>> GetRatings([FromQuery]int batchId)
         {
             try
             {

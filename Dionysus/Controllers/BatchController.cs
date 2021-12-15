@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Dionysus.DBModels;
 using Dionysus.Models.RequestModels;
+using Dionysus.DTO_s;
 
 namespace Dionysus.Controllers
 {
@@ -74,7 +75,7 @@ namespace Dionysus.Controllers
         }
         [HttpPost(nameof(AddBatch))]
         [Authorize(Roles = "Administrator, Winemaker")]
-        public async Task<ActionResult> AddBatch(Batch batch)
+        public async Task<ActionResult> AddBatch(BatchModel batch)
         {
             try
             {
@@ -119,14 +120,14 @@ namespace Dionysus.Controllers
 
         [HttpGet(nameof(GetBatch))]
         [Authorize(Roles = "Administrator, Winemaker")]
-        public async Task<ActionResult<Batch>> GetBatch([FromQuery]int batchId)
+        public async Task<ActionResult<BatchDTO>> GetBatch([FromQuery]int batchId)
         {
             try
             {
-                var list = await batchBusnessLogic.getBatch(batchId);
-                if (list != null)
+                var batch = await batchBusnessLogic.getBatch(batchId);
+                if (batch != null)
                 {
-                    return StatusCode(StatusCodes.Status200OK, list);
+                    return StatusCode(StatusCodes.Status200OK, batch);
                 }
                 else
                 {

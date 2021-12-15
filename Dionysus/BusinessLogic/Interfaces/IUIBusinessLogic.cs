@@ -12,6 +12,6 @@ namespace Dionysus.BusinessLogic.Interfaces
     {
         Task<AvarageDataReadingDTO> getAvarageReadingForDate(DateTime date);
         Task<AvarageDataReadingDTO> getAvarageReadingSinceBeginning(int batchId);
-        Task<List<EnvironmentalReading>> GetReadingsForBatch(int batchId);
+        Task<List<EnvironmentalReadingDTO>> GetReadingsForBatch(int batchId);
     }
 }

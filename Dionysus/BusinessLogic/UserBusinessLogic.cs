@@ -1,6 +1,7 @@
 ﻿using Dionysus.BusinessLogic.Interfaces;
 using Dionysus.DBAccess.Interfaces;
 using Dionysus.DBModels;
+using Dionysus.DTO_s;
 using Dionysus.Models;
 using Dionysus.Models.ResponceModels;
 using Microsoft.Extensions.Options;
@@ -49,12 +50,22 @@ namespace Dionysus.BusinessLogic
             return false;
         }
 
-        public Task<List<UserResponceModels>> getAllUsers()
+        public async Task<List<UserDTO>> getAllUsers()
         {
-            var users = userDBAccess.getAllUsers();
+            var users = await userDBAccess.getAllUsers();
             if (users != null)
             {
-                return users;
+                List<UserDTO> userDTOs = new();
+                foreach (var u in users)
+                {
+                    UserDTO userDTO = new()
+                    {
+                        Username = u.Username,
+                        Role = u.Role
+                    };
+                    userDTOs.Add(userDTO);
+                }
+                return userDTOs;
             }
             return null;
         }
