@@ -21,7 +21,7 @@ namespace Dionysus.JWT
         {
             this.applicationSettings = applicationSettings.Value;
         }
-        public string GenerateJwtAsync(User user)
+        public string GenerateJwt(User user)
         {
             var claims = new List<Claim>
             {

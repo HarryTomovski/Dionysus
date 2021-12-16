@@ -8,6 +8,6 @@ namespace Dionysus.JWT
 {
     public interface IJWTGeneration
     {
-        string GenerateJwtAsync(User user);
+        string GenerateJwt(User user);
     }
 }

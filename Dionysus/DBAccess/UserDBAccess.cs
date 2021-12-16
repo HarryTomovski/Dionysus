@@ -19,7 +19,7 @@ namespace Dionysus.DBAccess
         {
             this.tokenGenerator = tokenGenerator;
         }
-        public async Task<string> LoginAsync(UserLoginModel model)
+        public async Task<User> LoginAsync(UserLoginModel model)
         {
             using (var context = new DionysusContext())
             {
@@ -27,24 +27,18 @@ namespace Dionysus.DBAccess
                 {
                     var user = await context.Users.FirstOrDefaultAsync(u => u.Username == model.Username && u.Password == model.Password);
 
-                    if (user == null)
-                    {
-                        return string.Empty;
-                    }
+                    return user;
 
-                    var token = this.tokenGenerator.GenerateJwtAsync(user);
-
-                    return token;
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
-                    return string.Empty;
+                    return null;
                 }
             }
         }
 
-        public async Task<string> RegisterAsync(UserRegisterModel model)
+        public async Task<User> RegisterAsync(UserRegisterModel model)
         {
             using (var context = new DionysusContext())
             {
@@ -54,7 +48,7 @@ namespace Dionysus.DBAccess
 
                     if (user != null)
                     {
-                        return string.Empty;
+                        return null;
                     }
 
                     user = new User
@@ -68,14 +62,12 @@ namespace Dionysus.DBAccess
                     await context.Users.AddAsync(user);
                     await context.SaveChangesAsync();
 
-                    var token = await this.LoginAsync(new UserLoginModel() { Username = user.Username, Password = user.Password });
-
-                    return token;
+                    return user;
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
-                    return string.Empty;
+                    return null;
                 }
             }
         }

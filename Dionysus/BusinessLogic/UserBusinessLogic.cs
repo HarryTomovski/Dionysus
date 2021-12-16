@@ -2,6 +2,7 @@
 using Dionysus.DBAccess.Interfaces;
 using Dionysus.DBModels;
 using Dionysus.DTO_s;
+using Dionysus.JWT;
 using Dionysus.Models;
 using Dionysus.Models.ResponceModels;
 using Microsoft.Extensions.Options;
@@ -20,22 +21,33 @@ namespace Dionysus.BusinessLogic
     {
 
         private readonly IUserDBAccess userDBAccess;
-        
-        public UserBusinessLogic(IUserDBAccess userDBAccess)
+        private readonly IJWTGeneration tokenGenerator;
+
+        public UserBusinessLogic(IUserDBAccess userDBAccess, IJWTGeneration tokenGenerator)
         {
             this.userDBAccess = userDBAccess;
-            
+            this.tokenGenerator = tokenGenerator;
         }
-        public Task<string> RegisterUser(UserRegisterModel model)
+        public async Task<string> RegisterUser(UserRegisterModel model)
         {
-            var token = userDBAccess.RegisterAsync(model);
-            return token;
+            var user = await userDBAccess.RegisterAsync(model);
+            if(user is not null)
+            {
+                var token = tokenGenerator.GenerateJwt(user);
+                return token;
+            }
+            return string.Empty;
         }
 
-        public Task<string> LoginUser(UserLoginModel model)
+        public async Task<string> LoginUser(UserLoginModel model)
         {
-            var token = userDBAccess.LoginAsync(model);
-            return token;
+            var user = await userDBAccess.LoginAsync(model);
+            if(user is not null)
+            {
+                var token = tokenGenerator.GenerateJwt(user);
+                return token;
+            }
+            return string.Empty;
         }
 
         public async Task<bool> ChangeUserRole(string username, string role)
