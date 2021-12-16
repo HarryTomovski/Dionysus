@@ -71,7 +71,7 @@ namespace Dionysus.DBAccess
                         foreach (var notification in unresolvednotificationList)
                         {
                             var readingId = await context.Notifications.Where(b => b.BatchId == batchId).Select(r => r.ReadingId).FirstOrDefaultAsync();
-
+                            var notificationId= await context.Notifications.Where(b => b.BatchId == batchId && b.ReadingId == readingId).Select(n => n.NotificationId).FirstOrDefaultAsync();
                             var sensorPinNumber = await context.EnvironmentalReadings.Where(b => b.BatchId == batchId && b.ReadingId == readingId).Select(s=>s.SensorPinNumber).FirstOrDefaultAsync();
                             var tempReading = await context.EnvironmentalReadings.Where(b => b.BatchId == batchId && b.ReadingId == readingId).Select(t => t.TemperatureReading).FirstOrDefaultAsync(); 
                             var humidityReading = await context.EnvironmentalReadings.Where(b => b.BatchId == batchId && b.ReadingId == readingId).Select(h=>h.HumidityReading).FirstOrDefaultAsync();
@@ -79,7 +79,7 @@ namespace Dionysus.DBAccess
                             var targetHum = await context.Batches.Where(b => b.BatchId == batchId).Select(h=>h.TargetHumidity).FirstOrDefaultAsync();
                             var receivedOn= await context.Notifications.Where(b => b.BatchId == batchId && b.ReadingId == readingId).Select(d=>d.ReceivedOn).FirstOrDefaultAsync();
                             var resolved = await context.Notifications.Where(b => b.BatchId == batchId && b.ReadingId == readingId).Select(d => d.Resolved).FirstOrDefaultAsync();
-                            list.Add(new NotificationDTO(batchId, sensorPinNumber, humidityReading, tempReading, targetHum, targetTemp, receivedOn, resolved));
+                            list.Add(new NotificationDTO(notificationId,batchId, sensorPinNumber, humidityReading, tempReading, targetHum, targetTemp, receivedOn, resolved));
                         }
                         return list;
                     }

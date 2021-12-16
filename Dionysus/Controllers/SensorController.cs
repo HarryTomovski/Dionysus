@@ -33,7 +33,7 @@ namespace Dionysus.Controllers
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest);
+                    return StatusCode(StatusCodes.Status400BadRequest,result);
                 }
 
             }

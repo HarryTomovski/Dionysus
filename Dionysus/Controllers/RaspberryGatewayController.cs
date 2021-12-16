@@ -41,10 +41,10 @@ namespace Dionysus.Controllers
                     return StatusCode(StatusCodes.Status404NotFound, success);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
 
             }
         }
@@ -63,7 +63,7 @@ namespace Dionysus.Controllers
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status404NotFound);
+                    return StatusCode(StatusCodes.Status404NotFound, "No such exists!");
                 }
             }
             catch (Exception e)

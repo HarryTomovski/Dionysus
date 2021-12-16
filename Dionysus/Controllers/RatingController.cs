@@ -34,7 +34,7 @@ namespace Dionysus.Controllers
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest);
+                    return StatusCode(StatusCodes.Status400BadRequest,"The information you've provided cannot be processed!");
                 }
 
             }
@@ -57,7 +57,7 @@ namespace Dionysus.Controllers
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest);
+                    return StatusCode(StatusCodes.Status400BadRequest, "The information you've provided cannot be processed!");
                 }
 
             }

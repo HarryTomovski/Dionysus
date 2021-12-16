@@ -7,6 +7,7 @@ namespace Dionysus.DTO_s
 {
     public class NotificationDTO
     {
+        public int NotificationID { get; private set; }
         public int BatchId { get; private set; }
 
         public int PinNumber { get; private set; }
@@ -18,8 +19,9 @@ namespace Dionysus.DTO_s
         public DateTime PostedOn { get; private set; }
         public bool? Resolved { get; private set; }
 
-        public NotificationDTO(int BatchId,int PinNumber,double HumidityReading, double TemperatureReading, double HumidityTarget, double TemperatureTarget, DateTime PostedOn, bool? resolved)
+        public NotificationDTO(int NotificationID,int BatchId,int PinNumber,double HumidityReading, double TemperatureReading, double HumidityTarget, double TemperatureTarget, DateTime PostedOn, bool? resolved)
         {
+            this.NotificationID = NotificationID;
             this.BatchId = BatchId;
             this.PinNumber = PinNumber;
             this.HumidityReading = HumidityReading;
