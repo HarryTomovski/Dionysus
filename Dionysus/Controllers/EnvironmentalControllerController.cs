@@ -2,12 +2,15 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Web;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dionysus.DBModels;
 using Dionysus.Models.RequestModels;
+using System.Text.Json;
+using Dionysus.DTO_s;
 
 namespace Dionysus.Controllers
 {
@@ -46,12 +49,14 @@ namespace Dionysus.Controllers
 
         [HttpGet(nameof(GetManualControl))]
         [Authorize(Roles = "Administrator, Winemaker")]
-        public async Task<ActionResult<bool>> GetManualControl(GetManualControlModel model)
+        public async Task<ActionResult<ManualControlStates>> GetManualControl(GetManualControlModel model)
         {
             try
             {
                 var result = await environmentalController.getManualControl(model.PinNo, model.BatchId);
-                return StatusCode(StatusCodes.Status200OK, result);
+                ManualControlStates state = new(result, model.BatchId);
+                //var json = JsonSerializer.Serialize(responce);
+                return StatusCode(StatusCodes.Status200OK, state);
 
             }
             catch (Exception e)

@@ -8,14 +8,13 @@ namespace Dionysus.DTO_s
     public class ManualControlStates
     {
         public bool manualControl { get; private set; }
-        public bool temperatureControl { get; private set; }
-        public bool humidityControl { get; private set; }
+        public int batchId { get; private set; }
 
-        public ManualControlStates(bool manualControl, bool temperatureControl, bool humidityControl)
+
+        public ManualControlStates(bool manualControl, int batchId)
         {
             this.manualControl = manualControl;
-            this.temperatureControl = temperatureControl;
-            this.humidityControl = humidityControl;
+            this.batchId = batchId;
         }
     }
 }
