@@ -14,11 +14,13 @@ namespace Dionysus.BusinessLogic
     {
         private readonly IBatchDBAccess batchDBAccess;
         private readonly IRatingDBAccess ratingDBAccess;
+        private readonly INotificationDBAccess notificationDBAccess;
 
-        public BatchBusniessLogic(IBatchDBAccess batchDBAccess, IRatingDBAccess ratingDBAccess)
+        public BatchBusniessLogic(IBatchDBAccess batchDBAccess, IRatingDBAccess ratingDBAccess, INotificationDBAccess notificationDBAccess)
         {
             this.batchDBAccess = batchDBAccess;
             this.ratingDBAccess = ratingDBAccess;
+            this.notificationDBAccess = notificationDBAccess;
         }
         public async Task<int> setHumidityTarget(double humidity, int batchId)
         {
@@ -51,16 +53,8 @@ namespace Dionysus.BusinessLogic
             var batches = await batchDBAccess.getAllBatches();
             foreach (var b in batches)
             {
-                BatchDTO batchDTO = new()
-                {
-                    BatchId = b.BatchId,
-                    BarrelCount = b.BarrelCount,
-                    StoredOn = b.StoredOn,
-                    TargetHumidity = b.TargetHumidity,
-                    TargetTemperature = b.TargetTemperature,
-                    FinishedStorage = b.FinishedStorage
-                };
-                list.Add(batchDTO);
+                var batch = await this.getBatch(b.BatchId);
+                list.Add(batch);
             }
             return list;
         }
@@ -69,7 +63,8 @@ namespace Dionysus.BusinessLogic
         {
             var result = await batchDBAccess.getBatch(batchId);
             var ratings = await ratingDBAccess.getRatings(batchId);
-           
+            var notifications = await notificationDBAccess.getNotificationsForBatch(batchId);
+
             BatchDTO batchDTO = new()
             {
                 BatchId = result.BatchId,
@@ -78,7 +73,8 @@ namespace Dionysus.BusinessLogic
                 TargetHumidity = result.TargetHumidity,
                 TargetTemperature = result.TargetTemperature,
                 FinishedStorage = result.FinishedStorage,
-                Ratings = ratings
+                Ratings = ratings,
+                Notifications = notifications
             };
             return batchDTO;
         }

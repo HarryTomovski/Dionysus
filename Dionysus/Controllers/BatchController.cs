@@ -97,7 +97,7 @@ namespace Dionysus.Controllers
         }
         [HttpGet(nameof(GetAllBatches))]
         [Authorize(Roles = "Administrator, Winemaker")]
-        public async Task<ActionResult<List<Batch>>> GetAllBatches()
+        public async Task<ActionResult<List<BatchDTO>>> GetAllBatches()
         {
             try
             {

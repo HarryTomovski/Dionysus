@@ -15,5 +15,6 @@ namespace Dionysus.DTO_s
         public DateTime StoredOn { get; set; }
         public DateTime? FinishedStorage { get; set; }
         public List<Rating> Ratings { get; set; }
+        public List<NotificationDTO> Notifications { get; set; }
     }
 }
