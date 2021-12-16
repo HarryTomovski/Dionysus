@@ -34,11 +34,11 @@ namespace Dionysus.Controllers
                 int result = await batchBusnessLogic.setTemperatureTarget(model.TemperatureTarget, model.BatchId);
                 if (result == 1)
                 {
-                    return StatusCode(StatusCodes.Status200OK);
+                    return StatusCode(StatusCodes.Status200OK,"Temperature Target set successfully!");
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status404NotFound);
+                    return StatusCode(StatusCodes.Status404NotFound,"Such batch does not exists!");
                 }
             }
             catch (Exception e)
@@ -60,11 +60,11 @@ namespace Dionysus.Controllers
                 int result = await batchBusnessLogic.setHumidityTarget(model.HumidityTarget, model.BatchId);
                 if (result == 1)
                 {
-                    return StatusCode(StatusCodes.Status200OK);
+                    return StatusCode(StatusCodes.Status200OK,"Humidity target set successfully");
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status404NotFound);
+                    return StatusCode(StatusCodes.Status404NotFound, "Such batch does not exists!");
                 }
             }
             catch (Exception e)
@@ -86,7 +86,7 @@ namespace Dionysus.Controllers
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest);
+                    return StatusCode(StatusCodes.Status400BadRequest, "The information you have provided cannot be processed!");
                 }
 
             }
@@ -131,7 +131,7 @@ namespace Dionysus.Controllers
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest);
+                    return StatusCode(StatusCodes.Status400BadRequest,"Such batch deos not exist!");
                 }
             }
             catch (Exception e)

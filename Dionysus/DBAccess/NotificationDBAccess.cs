@@ -78,7 +78,8 @@ namespace Dionysus.DBAccess
                             var targetTemp = await context.Batches.Where(b => b.BatchId == batchId).Select(t => t.TargetTemperature).FirstOrDefaultAsync();
                             var targetHum = await context.Batches.Where(b => b.BatchId == batchId).Select(h=>h.TargetHumidity).FirstOrDefaultAsync();
                             var receivedOn= await context.Notifications.Where(b => b.BatchId == batchId && b.ReadingId == readingId).Select(d=>d.ReceivedOn).FirstOrDefaultAsync();
-                            list.Add(new NotificationDTO(batchId, sensorPinNumber, humidityReading, tempReading, targetHum, targetTemp, receivedOn));
+                            var resolved = await context.Notifications.Where(b => b.BatchId == batchId && b.ReadingId == readingId).Select(d => d.Resolved).FirstOrDefaultAsync();
+                            list.Add(new NotificationDTO(batchId, sensorPinNumber, humidityReading, tempReading, targetHum, targetTemp, receivedOn, resolved));
                         }
                         return list;
                     }

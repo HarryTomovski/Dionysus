@@ -33,11 +33,11 @@ namespace Dionysus.Controllers
                 int result = await environmentalController.setManualControl(model.EnableManualControl, model.PinNo, model.BatchId);
                 if (result == 1)
                 {
-                    return StatusCode(StatusCodes.Status200OK);
+                    return StatusCode(StatusCodes.Status200OK,"Manual mode set successfully!");
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status404NotFound);
+                    return StatusCode(StatusCodes.Status404NotFound,"Batch couldn't be found!");
                 }
             }
             catch (Exception e)
@@ -79,7 +79,7 @@ namespace Dionysus.Controllers
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status404NotFound);
+                    return StatusCode(StatusCodes.Status404NotFound,"Machine state set sucessfully!");
                 }
             }
             catch (Exception e)
@@ -96,7 +96,7 @@ namespace Dionysus.Controllers
             try
             {
                 var result = await environmentalController.getMachineState(model.PinNo, model.BatchId);
-                return StatusCode(StatusCodes.Status200OK);
+                return StatusCode(StatusCodes.Status200OK,"Machine state retrieved sucessfully!");
 
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Dionysus.Controllers
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest);
+                    return StatusCode(StatusCodes.Status400BadRequest,"The information you've provied cannot be processed!");
                 }
 
             }

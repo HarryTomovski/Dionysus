@@ -37,12 +37,12 @@ namespace Dionysus.Controllers
                     }
                     else
                     {
-                        return StatusCode(StatusCodes.Status404NotFound);
+                        return StatusCode(StatusCodes.Status404NotFound, "No such batch exists!");
                     }
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest);
+                    return StatusCode(StatusCodes.Status400BadRequest,"The information you've provided cannot be processed!");
                 }
             }
             catch (Exception e)
@@ -68,7 +68,7 @@ namespace Dionysus.Controllers
                     }
                     else
                     {
-                        return StatusCode(StatusCodes.Status404NotFound);
+                        return StatusCode(StatusCodes.Status404NotFound,"No notificatoins have been found!");
                     }
                 }
                 else
@@ -95,16 +95,16 @@ namespace Dionysus.Controllers
                     var notification = await notificationBusinessLogic.resolveNotification(notificationId);
                     if (notification)
                     {
-                        return StatusCode(StatusCodes.Status200OK);
+                        return StatusCode(StatusCodes.Status200OK,"Notification resolved successfully!");
                     }
                     else
                     {
-                        return StatusCode(StatusCodes.Status404NotFound);
+                        return StatusCode(StatusCodes.Status404NotFound,"No such notitication has been found!");
                     }
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest);
+                    return StatusCode(StatusCodes.Status400BadRequest,"The information you've provided cannot be processed!");
                 }
             }
             catch (Exception e)

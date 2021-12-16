@@ -16,8 +16,9 @@ namespace Dionysus.DTO_s
         public double TemperatureTarget { get; private set; }
 
         public DateTime PostedOn { get; private set; }
+        public bool? Resolved { get; private set; }
 
-        public NotificationDTO(int BatchId,int PinNumber,double HumidityReading, double TemperatureReading, double HumidityTarget, double TemperatureTarget, DateTime PostedOn)
+        public NotificationDTO(int BatchId,int PinNumber,double HumidityReading, double TemperatureReading, double HumidityTarget, double TemperatureTarget, DateTime PostedOn, bool? resolved)
         {
             this.BatchId = BatchId;
             this.PinNumber = PinNumber;
@@ -26,6 +27,7 @@ namespace Dionysus.DTO_s
             this.HumidityTarget = HumidityTarget;
             this.TemperatureTarget = TemperatureTarget;
             this.PostedOn = PostedOn;
+            this.Resolved = resolved;
         }
 
     }
