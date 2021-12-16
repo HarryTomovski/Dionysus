@@ -88,12 +88,12 @@ namespace Dionysus.Controllers
                     }
                     else
                     {
-                        return StatusCode(StatusCodes.Status404NotFound);
+                        return StatusCode(StatusCodes.Status404NotFound,"No such has been found!");
                     }
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest);
+                    return StatusCode(StatusCodes.Status400BadRequest,"The information you've provided cannot be processed!");
                 }
             }
             catch (Exception e)
