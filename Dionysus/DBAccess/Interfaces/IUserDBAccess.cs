@@ -10,8 +10,8 @@ namespace Dionysus.DBAccess.Interfaces
 {
     public interface IUserDBAccess
     {
-        Task<User> RegisterAsync(UserRegisterModel model);
-        Task<User> LoginAsync(UserLoginModel model);
+        Task<User> RegisterAsync(string name, string username, string password);
+        Task<User> LoginAsync(string username, string password);
         Task<bool> ChangeUserRole(string username, string role);
         Task<bool> userExsist(string username);
         Task<List<User>> getAllUsers();

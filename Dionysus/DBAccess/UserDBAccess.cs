@@ -14,18 +14,13 @@ namespace Dionysus.DBAccess
 {
     public class UserDBAccess : IUserDBAccess
     {
-        private readonly IJWTGeneration tokenGenerator;
-        public UserDBAccess(IJWTGeneration tokenGenerator)
-        {
-            this.tokenGenerator = tokenGenerator;
-        }
-        public async Task<User> LoginAsync(UserLoginModel model)
+        public async Task<User> LoginAsync(string username, string password)
         {
             using (var context = new DionysusContext())
             {
                 try
                 {
-                    var user = await context.Users.FirstOrDefaultAsync(u => u.Username == model.Username && u.Password == model.Password);
+                    var user = await context.Users.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
 
                     return user;
 
@@ -38,13 +33,13 @@ namespace Dionysus.DBAccess
             }
         }
 
-        public async Task<User> RegisterAsync(UserRegisterModel model)
+        public async Task<User> RegisterAsync(string name, string username, string password)
         {
             using (var context = new DionysusContext())
             {
                 try
                 {
-                    var user = await context.Users.FirstOrDefaultAsync(u => u.Username == model.Username);
+                    var user = await context.Users.FirstOrDefaultAsync(u => u.Username == username);
 
                     if (user != null)
                     {
@@ -53,9 +48,9 @@ namespace Dionysus.DBAccess
 
                     user = new User
                     {
-                        Name = model.Name,
-                        Username = model.Username,
-                        Password = model.Password,
+                        Name = name,
+                        Username = username,
+                        Password = password,
                         Role = UserEnums.Dilletant.ToString()
                     };
 

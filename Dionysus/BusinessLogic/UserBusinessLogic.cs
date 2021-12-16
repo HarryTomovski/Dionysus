@@ -30,7 +30,7 @@ namespace Dionysus.BusinessLogic
         }
         public async Task<string> RegisterUser(UserRegisterModel model)
         {
-            var user = await userDBAccess.RegisterAsync(model);
+            var user = await userDBAccess.RegisterAsync(model.Name, model.Username, model.Password);
             if(user is not null)
             {
                 var token = tokenGenerator.GenerateJwt(user);
@@ -41,7 +41,7 @@ namespace Dionysus.BusinessLogic
 
         public async Task<string> LoginUser(UserLoginModel model)
         {
-            var user = await userDBAccess.LoginAsync(model);
+            var user = await userDBAccess.LoginAsync(model.Username, model.Password);
             if(user is not null)
             {
                 var token = tokenGenerator.GenerateJwt(user);
